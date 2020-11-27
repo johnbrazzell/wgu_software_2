@@ -52,9 +52,41 @@ namespace wgu_software_2
             }
         }
 
-        static public void VerifyLogin()
+        
+        static void CloseConnection()
         {
+            if(connection.State.ToString() == "Closed")
+            {
+                return;
+            }
+            else
+            {
+                try
+                {
 
+                    if(connection.State.ToString() == "Open")
+                    {
+                        connection.Close();
+                    }
+                }
+                catch(MySqlException e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+            }
+        }
+
+        static public void VerifyLogin(string userName, string password)
+        {
+            //take in username and password and check it against database
+            MySqlCommand loginCheckCommand = connection.CreateCommand();
+            loginCheckCommand.CommandText = "SELECT userName FROM user";
+            MySqlDataReader loginReader = loginCheckCommand.ExecuteReader();
+
+            while(loginReader.Read())
+            {
+                MessageBox.Show(loginReader["userName"].ToString());
+            }
         }
     }
 }

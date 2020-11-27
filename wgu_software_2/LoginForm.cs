@@ -22,6 +22,7 @@ namespace wgu_software_2
         {
             //MessageBox.Show("Login button pressed!");
             DBHelper.OpenConnection();
+            DBHelper.VerifyLogin(usernameTextBox.Text, passwordTextBox.Text);
         }
     }
 }
