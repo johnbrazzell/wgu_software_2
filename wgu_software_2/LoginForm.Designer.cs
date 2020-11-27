@@ -75,6 +75,7 @@ namespace wgu_software_2
             // 
             this.passwordTextBox.Location = new System.Drawing.Point(372, 120);
             this.passwordTextBox.Name = "passwordTextBox";
+            this.passwordTextBox.PasswordChar = '*';
             this.passwordTextBox.Size = new System.Drawing.Size(100, 20);
             this.passwordTextBox.TabIndex = 4;
             // 

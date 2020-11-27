@@ -19,6 +19,8 @@ namespace wgu_software_2
     static class DBHelper
     {
         public static MySqlConnection connection;
+
+        private static List<string> userRecordsList = new List<string>();
         static public void OpenConnection()
         {
             MySqlConnectionStringBuilder connectionString = new MySqlConnectionStringBuilder();
@@ -46,14 +48,14 @@ namespace wgu_software_2
                 }
                 catch (MySqlException e)
                 {
-                    MessageBox.Show(e.Message);
+                    MessageBox.Show(e.Message, "This is an error");
                 }
 
             }
         }
 
         
-        static void CloseConnection()
+        static public void CloseConnection()
         {
             if(connection.State.ToString() == "Closed")
             {
@@ -71,22 +73,49 @@ namespace wgu_software_2
                 }
                 catch(MySqlException e)
                 {
-                    MessageBox.Show(e.Message);
+                    MessageBox.Show(e.Message, "This is an error");
+
                 }
             }
         }
 
-        static public void VerifyLogin(string userName, string password)
+        static public bool VerifyLogin(string userName, string password)
         {
-            //take in username and password and check it against database
+            
             MySqlCommand loginCheckCommand = connection.CreateCommand();
-            loginCheckCommand.CommandText = "SELECT userName FROM user";
+            loginCheckCommand.CommandText = "SELECT * FROM user WHERE userName=@username AND password=@password";
+            loginCheckCommand.Parameters.AddWithValue("@username", userName);
+            loginCheckCommand.Parameters.AddWithValue("@password", password);
+
             MySqlDataReader loginReader = loginCheckCommand.ExecuteReader();
 
-            while(loginReader.Read())
+            if (loginReader.HasRows)
             {
-                MessageBox.Show(loginReader["userName"].ToString());
+                
+                return true;
             }
+            else
+            {
+           
+                return false;
+            }
+            //while (loginReader.Read()) //need to check username and password
+            //{
+            //    if(loginReader["userName"].ToString() == userName)
+            //    {
+            //        if(loginReader["password"].ToString() ==  password)
+            //        {
+            //            MessageBox.Show("Login successful");
+            //            break;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Username or password is incorrect.");
+            //    }
+               
+            //}
+
         }
     }
 }
