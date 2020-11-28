@@ -16,5 +16,10 @@ namespace wgu_software_2
         {
             InitializeComponent();
         }
+
+        private void calendar_DateChanged(object sender, DateRangeEventArgs e)
+        {
+
+        }
     }
 }

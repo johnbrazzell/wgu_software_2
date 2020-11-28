@@ -12,6 +12,7 @@ namespace wgu_software_2
 {
     public partial class LoginForm : Form
     {
+        AppointmentForm appointmentForm = new AppointmentForm();
         
         public LoginForm()
         {
@@ -26,12 +27,16 @@ namespace wgu_software_2
             if(loginSuccess)
             {
                 MessageBox.Show("Login Successful!");
+                appointmentForm.Show();
+                this.Hide();
             }
             else
             {
                 MessageBox.Show("Username or Password incorrect.");
             }
             DBHelper.CloseConnection();
+           
+
         }
     }
 }

@@ -29,16 +29,19 @@ namespace wgu_software_2
         /// </summary>
         private void InitializeComponent()
         {
-            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
+            this.calendar = new System.Windows.Forms.MonthCalendar();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // monthCalendar1
+            // calendar
             // 
-            this.monthCalendar1.Location = new System.Drawing.Point(87, 104);
-            this.monthCalendar1.Name = "monthCalendar1";
-            this.monthCalendar1.TabIndex = 0;
+            this.calendar.FirstDayOfWeek = System.Windows.Forms.Day.Sunday;
+            this.calendar.Location = new System.Drawing.Point(87, 104);
+            this.calendar.MaxSelectionCount = 1;
+            this.calendar.Name = "calendar";
+            this.calendar.TabIndex = 0;
+            this.calendar.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.calendar_DateChanged);
             // 
             // dataGridView1
             // 
@@ -54,7 +57,7 @@ namespace wgu_software_2
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.monthCalendar1);
+            this.Controls.Add(this.calendar);
             this.Name = "AppointmentForm";
             this.Text = "AppointmentForm";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -64,7 +67,7 @@ namespace wgu_software_2
 
         #endregion
 
-        private System.Windows.Forms.MonthCalendar monthCalendar1;
+        private System.Windows.Forms.MonthCalendar calendar;
         private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
