@@ -59,7 +59,7 @@ namespace wgu_software_2
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.calendar);
             this.Name = "AppointmentForm";
-            this.Text = "AppointmentForm";
+            this.Text = "Appointment Scheduler - Main Screen";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 

@@ -20,7 +20,7 @@ namespace wgu_software_2
     {
         public static MySqlConnection connection;
 
-        private static List<string> userRecordsList = new List<string>();
+        //private static List<string> userRecordsList = new List<string>();
         static public void OpenConnection()
         {
             MySqlConnectionStringBuilder connectionString = new MySqlConnectionStringBuilder();
@@ -48,7 +48,7 @@ namespace wgu_software_2
                 }
                 catch (MySqlException e)
                 {
-                    MessageBox.Show(e.Message, "This is an error");
+                    MessageBox.Show(e.Message, "Error occured when trying to open DB connection.");
                 }
 
             }
@@ -73,7 +73,7 @@ namespace wgu_software_2
                 }
                 catch(MySqlException e)
                 {
-                    MessageBox.Show(e.Message, "This is an error");
+                    MessageBox.Show(e.Message, "Error occured when trying to close DB connection.");
 
                 }
             }
