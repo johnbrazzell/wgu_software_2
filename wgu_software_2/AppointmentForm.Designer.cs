@@ -30,8 +30,9 @@ namespace wgu_software_2
         private void InitializeComponent()
         {
             this.calendar = new System.Windows.Forms.MonthCalendar();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.appointmentDataGridView = new System.Windows.Forms.DataGridView();
+            this.appointmentFilterComboBox = new System.Windows.Forms.ComboBox();
+            ((System.ComponentModel.ISupportInitialize)(this.appointmentDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // calendar
@@ -43,24 +44,34 @@ namespace wgu_software_2
             this.calendar.TabIndex = 0;
             this.calendar.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.calendar_DateChanged);
             // 
-            // dataGridView1
+            // appointmentDataGridView
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(459, 104);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
-            this.dataGridView1.TabIndex = 1;
+            this.appointmentDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.appointmentDataGridView.Location = new System.Drawing.Point(326, 104);
+            this.appointmentDataGridView.Name = "appointmentDataGridView";
+            this.appointmentDataGridView.Size = new System.Drawing.Size(438, 283);
+            this.appointmentDataGridView.TabIndex = 1;
+            // 
+            // appointmentFilterComboBox
+            // 
+            this.appointmentFilterComboBox.FormattingEnabled = true;
+            this.appointmentFilterComboBox.Location = new System.Drawing.Point(459, 48);
+            this.appointmentFilterComboBox.Name = "appointmentFilterComboBox";
+            this.appointmentFilterComboBox.Size = new System.Drawing.Size(121, 21);
+            this.appointmentFilterComboBox.TabIndex = 2;
+            this.appointmentFilterComboBox.SelectedIndexChanged += new System.EventHandler(this.appointmentFilterComboBox_SelectedIndexChanged);
             // 
             // AppointmentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.appointmentFilterComboBox);
+            this.Controls.Add(this.appointmentDataGridView);
             this.Controls.Add(this.calendar);
             this.Name = "AppointmentForm";
             this.Text = "Appointment Scheduler - Main Screen";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.appointmentDataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -68,6 +79,7 @@ namespace wgu_software_2
         #endregion
 
         private System.Windows.Forms.MonthCalendar calendar;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView appointmentDataGridView;
+        private System.Windows.Forms.ComboBox appointmentFilterComboBox;
     }
 }

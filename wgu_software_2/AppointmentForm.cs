@@ -7,17 +7,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data;
+using MySql.Data.MySqlClient;
 
 namespace wgu_software_2
 {
     public partial class AppointmentForm : Form
     {
+
+        MySqlDataAdapter _adapter;
+        MySqlConnection _connection;
+        DataSet data = new DataSet();
         public AppointmentForm()
         {
             InitializeComponent();
+            DBHelper.OpenConnection();
+            
+            _connection = DBHelper.GetConnection();
+
+            _adapter = new MySqlDataAdapter("SELECT * FROM appointment ", _connection);
+            _adapter.Fill(data);
+            this.appointmentDataGridView.DataSource = data.Tables[0];
+
+           // MySqlDataReader reader = DBHelper.ExecuteQuery("test");
         }
 
         private void calendar_DateChanged(object sender, DateRangeEventArgs e)
+        {
+
+        }
+
+        private void appointmentFilterComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

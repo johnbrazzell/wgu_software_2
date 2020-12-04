@@ -18,9 +18,13 @@ namespace wgu_software_2
     /// </summary>
     static class DBHelper
     {
-        public static MySqlConnection connection;
+        private static MySqlConnection _connection;
 
-        //private static List<string> userRecordsList = new List<string>();
+        
+        public static MySqlConnection GetConnection()
+        {
+            return _connection;
+        }
         static public void OpenConnection()
         {
             MySqlConnectionStringBuilder connectionString = new MySqlConnectionStringBuilder();
@@ -30,20 +34,21 @@ namespace wgu_software_2
             connectionString.Database = "U059ub";
             connectionString.Password = "53688442061";
 
-            connection = new MySqlConnection(connectionString.ToString());
+            _connection = new MySqlConnection(connectionString.ToString());
             
 
-            if (connection.State.ToString() == "Open")
+            if (_connection.State.ToString() == "Open")
             {
                 //MessageBox.Show("Connection is open");   
                 return;
+               
             }
             else
             {
                 try
                 {
 
-                    connection.Open();
+                    _connection.Open();
                     
                 }
                 catch (MySqlException e)
@@ -57,7 +62,7 @@ namespace wgu_software_2
         
         static public void CloseConnection()
         {
-            if(connection.State.ToString() == "Closed")
+            if(_connection.State.ToString() == "Closed")
             {
                 return;
             }
@@ -66,9 +71,9 @@ namespace wgu_software_2
                 try
                 {
 
-                    if(connection.State.ToString() == "Open")
+                    if(_connection.State.ToString() == "Open")
                     {
-                        connection.Close();
+                        _connection.Close();
                     }
                 }
                 catch(MySqlException e)
@@ -79,10 +84,19 @@ namespace wgu_software_2
             }
         }
 
+        static public MySqlDataReader ExecuteQuery(string query)
+        {
+            MySqlCommand command = _connection.CreateCommand();
+            command.CommandText = query;
+            MySqlDataReader reader = command.ExecuteReader();
+
+            return reader;
+        }
+
         static public bool VerifyLogin(string userName, string password)
         {
             
-            MySqlCommand loginCheckCommand = connection.CreateCommand();
+            MySqlCommand loginCheckCommand = _connection.CreateCommand();
             loginCheckCommand.CommandText = "SELECT * FROM user WHERE userName=@username AND password=@password";
             loginCheckCommand.Parameters.AddWithValue("@username", userName);
             loginCheckCommand.Parameters.AddWithValue("@password", password);
