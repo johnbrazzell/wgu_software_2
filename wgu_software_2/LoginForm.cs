@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 using System.Globalization;
 using System.Windows.Forms;
 
@@ -20,6 +21,7 @@ namespace wgu_software_2
         private string _currentCulture;
         private string _usernameAndPasswordWarning;
         private TimeZone _userTimeZone;
+        private string _docPath = Environment.CurrentDirectory;
         
         public LoginForm()
         {
@@ -54,6 +56,8 @@ namespace wgu_software_2
             if(loginSuccess)
             {
                 MessageBox.Show("Login Successful!");
+                //if login is successful then stamp time with user information
+                LoginStamp(_docPath, usernameTextBox.Text);
                 appointmentForm.Show();
                 this.Hide();
             }
@@ -64,6 +68,31 @@ namespace wgu_software_2
             DBHelper.CloseConnection();
            
 
+        }
+
+        private void LoginStamp(string documentPath, string userInfo)
+        {
+            //Check if file has already been created by a previous login and if so open that file
+            //and append new timestamp to it
+            //else create the file and append timestamp
+
+           // DateTime offset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow);
+            DateTime convertedLocalTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.Local);
+            if (File.Exists(Environment.CurrentDirectory + "/LoginFile.txt"))
+            {
+                using(StreamWriter appendText = File.AppendText(Environment.CurrentDirectory + "/LoginFile.txt"))
+                {
+                    appendText.WriteLine("[User:]" + userInfo + "\t" + " [Login Timestamp:]" + convertedLocalTime.ToString());//DateTime.Now.ToString());
+                }
+                //MessageBox.Show("file already exists");
+            }
+            else
+            {
+                using (StreamWriter textOutputFile = new StreamWriter(Path.Combine(documentPath, "LoginFile.txt")))
+                {
+                    textOutputFile.WriteLine("[User:]" + userInfo + "\t" + " [Login Timestamp:]" + convertedLocalTime.ToString());//DateTime.Now.ToString()) ;
+                }
+            }
         }
     }
 }

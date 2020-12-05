@@ -21,6 +21,7 @@ namespace wgu_software_2
         public AppointmentForm()
         {
             InitializeComponent();
+            appointmentFilterComboBox.SelectedIndex = 0;
             DBHelper.OpenConnection();
             
             _connection = DBHelper.GetConnection();
@@ -39,7 +40,8 @@ namespace wgu_software_2
 
         private void appointmentFilterComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            
+            
         }
     }
 }
