@@ -48,5 +48,12 @@ namespace wgu_software_2
         {
             //need to load data into this gridview
         }
+
+        private void addCustomerButton_Click(object sender, EventArgs e)
+        {
+            //open Add Customer Form
+            AddCustomerForm addCustomerForm = new AddCustomerForm();
+            addCustomerForm.Show();
+        }
     }
 }
