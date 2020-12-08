@@ -90,7 +90,8 @@ namespace wgu_software_2
             {
                 using (StreamWriter textOutputFile = new StreamWriter(Path.Combine(documentPath, "LoginFile.txt")))
                 {
-                    textOutputFile.WriteLine("[User:]" + userInfo + "\t" + " [Login Timestamp:]" + convertedLocalTime.ToString());//DateTime.Now.ToString()) ;
+                    textOutputFile.WriteLine("[User:]" + userInfo + "\t" + " [Login Timestamp Local:]" + convertedLocalTime.ToString() + "[Login Timestamp UTC]:" + convertedLocalTime.ToUniversalTime().ToString()) ;//DateTime.Now.ToString()) ;
+
                 }
             }
         }

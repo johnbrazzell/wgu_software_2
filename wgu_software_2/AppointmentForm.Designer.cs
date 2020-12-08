@@ -34,12 +34,13 @@ namespace wgu_software_2
             this.appointmentFilterComboBox = new System.Windows.Forms.ComboBox();
             this.appointmentScheduleTabs = new System.Windows.Forms.TabControl();
             this.appointmentTabView = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.filterLabel = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.customerGridView = new System.Windows.Forms.DataGridView();
-            this.addCustomerButton = new System.Windows.Forms.Button();
+            this.filterLabel = new System.Windows.Forms.Label();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.deleteCustomerButton = new System.Windows.Forms.Button();
+            this.addCustomerButton = new System.Windows.Forms.Button();
+            this.customerGridView = new System.Windows.Forms.DataGridView();
+            this.updateCustomerButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.appointmentDataGridView)).BeginInit();
             this.appointmentScheduleTabs.SuspendLayout();
             this.appointmentTabView.SuspendLayout();
@@ -104,18 +105,15 @@ namespace wgu_software_2
             this.appointmentTabView.Text = "Appointments";
             this.appointmentTabView.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // button1
             // 
-            this.tabPage2.Controls.Add(this.deleteCustomerButton);
-            this.tabPage2.Controls.Add(this.addCustomerButton);
-            this.tabPage2.Controls.Add(this.customerGridView);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(768, 391);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Customers";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(50, 272);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(176, 48);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "Add Appointment";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // filterLabel
             // 
@@ -127,23 +125,28 @@ namespace wgu_software_2
             this.filterLabel.TabIndex = 3;
             this.filterLabel.Text = "Sort By:";
             // 
-            // button1
+            // tabPage2
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(50, 272);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(176, 48);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Add Appointment";
-            this.button1.UseVisualStyleBackColor = true;
+            this.tabPage2.Controls.Add(this.updateCustomerButton);
+            this.tabPage2.Controls.Add(this.deleteCustomerButton);
+            this.tabPage2.Controls.Add(this.addCustomerButton);
+            this.tabPage2.Controls.Add(this.customerGridView);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(768, 391);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Customers";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // customerGridView
+            // deleteCustomerButton
             // 
-            this.customerGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.customerGridView.Location = new System.Drawing.Point(51, 32);
-            this.customerGridView.Name = "customerGridView";
-            this.customerGridView.Size = new System.Drawing.Size(666, 295);
-            this.customerGridView.TabIndex = 0;
+            this.deleteCustomerButton.Location = new System.Drawing.Point(327, 333);
+            this.deleteCustomerButton.Name = "deleteCustomerButton";
+            this.deleteCustomerButton.Size = new System.Drawing.Size(135, 35);
+            this.deleteCustomerButton.TabIndex = 2;
+            this.deleteCustomerButton.Text = "Delete Customer";
+            this.deleteCustomerButton.UseVisualStyleBackColor = true;
             // 
             // addCustomerButton
             // 
@@ -154,14 +157,23 @@ namespace wgu_software_2
             this.addCustomerButton.Text = "Add Customer";
             this.addCustomerButton.UseVisualStyleBackColor = true;
             // 
-            // deleteCustomerButton
+            // customerGridView
             // 
-            this.deleteCustomerButton.Location = new System.Drawing.Point(189, 333);
-            this.deleteCustomerButton.Name = "deleteCustomerButton";
-            this.deleteCustomerButton.Size = new System.Drawing.Size(135, 35);
-            this.deleteCustomerButton.TabIndex = 2;
-            this.deleteCustomerButton.Text = "Delete Customer";
-            this.deleteCustomerButton.UseVisualStyleBackColor = true;
+            this.customerGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.customerGridView.Location = new System.Drawing.Point(51, 32);
+            this.customerGridView.Name = "customerGridView";
+            this.customerGridView.Size = new System.Drawing.Size(666, 295);
+            this.customerGridView.TabIndex = 0;
+            this.customerGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.customerGridView_CellContentClick);
+            // 
+            // updateCustomerButton
+            // 
+            this.updateCustomerButton.Location = new System.Drawing.Point(189, 333);
+            this.updateCustomerButton.Name = "updateCustomerButton";
+            this.updateCustomerButton.Size = new System.Drawing.Size(132, 35);
+            this.updateCustomerButton.TabIndex = 3;
+            this.updateCustomerButton.Text = "Update Customer";
+            this.updateCustomerButton.UseVisualStyleBackColor = true;
             // 
             // AppointmentForm
             // 
@@ -194,5 +206,6 @@ namespace wgu_software_2
         private System.Windows.Forms.Button deleteCustomerButton;
         private System.Windows.Forms.Button addCustomerButton;
         private System.Windows.Forms.DataGridView customerGridView;
+        private System.Windows.Forms.Button updateCustomerButton;
     }
 }

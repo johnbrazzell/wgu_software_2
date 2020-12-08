@@ -41,7 +41,12 @@ namespace wgu_software_2
         private void appointmentFilterComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             
-            
+            //use this function to change the filter method
+        }
+
+        private void customerGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //need to load data into this gridview
         }
     }
 }
