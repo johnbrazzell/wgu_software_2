@@ -60,8 +60,8 @@ namespace wgu_software_2
                 //if login is successful then stamp time with user information
                 LoginStamp(_docPath, usernameTextBox.Text);
                 appointmentForm.Show();
-                //this.Hide();
-                this.Close();
+                this.Hide();
+                //this.Close();
             }
             else
             {

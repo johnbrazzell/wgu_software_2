@@ -114,6 +114,7 @@ namespace wgu_software_2
             this.addAppointmentButton.TabIndex = 4;
             this.addAppointmentButton.Text = "Add Appointment";
             this.addAppointmentButton.UseVisualStyleBackColor = true;
+            this.addAppointmentButton.Click += new System.EventHandler(this.addAppointmentButton_Click);
             // 
             // filterLabel
             // 

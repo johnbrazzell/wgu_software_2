@@ -55,5 +55,10 @@ namespace wgu_software_2
             AddCustomerForm addCustomerForm = new AddCustomerForm();
             addCustomerForm.Show();
         }
+
+        private void addAppointmentButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
