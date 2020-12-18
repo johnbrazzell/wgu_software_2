@@ -83,15 +83,33 @@ namespace wgu_software_2
                 }
             }
         }
-
-        static public MySqlDataReader ExecuteQuery(string query)
+        //MySqalDataReader
+        static public void ExecuteQuery(string query)
         {
             MySqlCommand command = _connection.CreateCommand();
             command.CommandText = query;
             MySqlDataReader reader = command.ExecuteReader();
 
-            return reader;
+            //return reader;
         }
+
+
+        static public List<string> SelectData(string query)
+        {
+            //return list of data
+            List<string> list = new List<string>();
+            MySqlCommand command = _connection.CreateCommand();
+            command.CommandText = query;
+            MySqlDataReader reader = command.ExecuteReader();
+
+            while(reader.Read())
+            {
+                list.Add(reader.ToString());
+            }
+
+            return list;
+        }
+
 
         static public bool VerifyLogin(string userName, string password)
         {
@@ -105,12 +123,12 @@ namespace wgu_software_2
 
             if (loginReader.HasRows)
             {
-                
+                loginReader.Close();
                 return true;
             }
             else
             {
-           
+                loginReader.Close();
                 return false;
             }
             //while (loginReader.Read()) //need to check username and password

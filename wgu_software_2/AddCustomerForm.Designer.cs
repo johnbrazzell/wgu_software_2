@@ -53,7 +53,7 @@
             // 
             this.nameLabel.AutoSize = true;
             this.nameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nameLabel.Location = new System.Drawing.Point(23, 39);
+            this.nameLabel.Location = new System.Drawing.Point(24, 68);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(55, 20);
             this.nameLabel.TabIndex = 0;
@@ -63,7 +63,7 @@
             // 
             this.addressLabel.AutoSize = true;
             this.addressLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addressLabel.Location = new System.Drawing.Point(23, 77);
+            this.addressLabel.Location = new System.Drawing.Point(24, 106);
             this.addressLabel.Name = "addressLabel";
             this.addressLabel.Size = new System.Drawing.Size(72, 20);
             this.addressLabel.TabIndex = 1;
@@ -73,7 +73,7 @@
             // 
             this.address2Label.AutoSize = true;
             this.address2Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.address2Label.Location = new System.Drawing.Point(23, 117);
+            this.address2Label.Location = new System.Drawing.Point(24, 146);
             this.address2Label.Name = "address2Label";
             this.address2Label.Size = new System.Drawing.Size(85, 20);
             this.address2Label.TabIndex = 2;
@@ -83,7 +83,7 @@
             // 
             this.phoneLabel.AutoSize = true;
             this.phoneLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.phoneLabel.Location = new System.Drawing.Point(23, 197);
+            this.phoneLabel.Location = new System.Drawing.Point(24, 226);
             this.phoneLabel.Name = "phoneLabel";
             this.phoneLabel.Size = new System.Drawing.Size(59, 20);
             this.phoneLabel.TabIndex = 3;
@@ -93,7 +93,7 @@
             // 
             this.postalCodeLabel.AutoSize = true;
             this.postalCodeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.postalCodeLabel.Location = new System.Drawing.Point(23, 159);
+            this.postalCodeLabel.Location = new System.Drawing.Point(24, 188);
             this.postalCodeLabel.Name = "postalCodeLabel";
             this.postalCodeLabel.Size = new System.Drawing.Size(133, 20);
             this.postalCodeLabel.TabIndex = 4;
@@ -103,7 +103,7 @@
             // 
             this.activeCustomerLabel.AutoSize = true;
             this.activeCustomerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.activeCustomerLabel.Location = new System.Drawing.Point(23, 234);
+            this.activeCustomerLabel.Location = new System.Drawing.Point(24, 263);
             this.activeCustomerLabel.Name = "activeCustomerLabel";
             this.activeCustomerLabel.Size = new System.Drawing.Size(129, 20);
             this.activeCustomerLabel.TabIndex = 5;
@@ -113,7 +113,7 @@
             // 
             this.countryLabel.AutoSize = true;
             this.countryLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.countryLabel.Location = new System.Drawing.Point(347, 39);
+            this.countryLabel.Location = new System.Drawing.Point(348, 68);
             this.countryLabel.Name = "countryLabel";
             this.countryLabel.Size = new System.Drawing.Size(68, 20);
             this.countryLabel.TabIndex = 6;
@@ -123,7 +123,7 @@
             // 
             this.cityLabel.AutoSize = true;
             this.cityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cityLabel.Location = new System.Drawing.Point(347, 77);
+            this.cityLabel.Location = new System.Drawing.Point(348, 106);
             this.cityLabel.Name = "cityLabel";
             this.cityLabel.Size = new System.Drawing.Size(41, 20);
             this.cityLabel.TabIndex = 7;
@@ -132,7 +132,7 @@
             // nameTextBox
             // 
             this.nameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nameTextBox.Location = new System.Drawing.Point(162, 33);
+            this.nameTextBox.Location = new System.Drawing.Point(163, 62);
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(164, 26);
             this.nameTextBox.TabIndex = 8;
@@ -140,7 +140,7 @@
             // addressTextBox
             // 
             this.addressTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addressTextBox.Location = new System.Drawing.Point(162, 71);
+            this.addressTextBox.Location = new System.Drawing.Point(163, 100);
             this.addressTextBox.Name = "addressTextBox";
             this.addressTextBox.Size = new System.Drawing.Size(164, 26);
             this.addressTextBox.TabIndex = 9;
@@ -148,7 +148,7 @@
             // addresd2TextBox
             // 
             this.addresd2TextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addresd2TextBox.Location = new System.Drawing.Point(162, 111);
+            this.addresd2TextBox.Location = new System.Drawing.Point(163, 140);
             this.addresd2TextBox.Name = "addresd2TextBox";
             this.addresd2TextBox.Size = new System.Drawing.Size(164, 26);
             this.addresd2TextBox.TabIndex = 10;
@@ -156,7 +156,7 @@
             // postalCodeTextBox
             // 
             this.postalCodeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.postalCodeTextBox.Location = new System.Drawing.Point(162, 153);
+            this.postalCodeTextBox.Location = new System.Drawing.Point(163, 182);
             this.postalCodeTextBox.Name = "postalCodeTextBox";
             this.postalCodeTextBox.Size = new System.Drawing.Size(164, 26);
             this.postalCodeTextBox.TabIndex = 11;
@@ -164,7 +164,7 @@
             // textBox4
             // 
             this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox4.Location = new System.Drawing.Point(162, 191);
+            this.textBox4.Location = new System.Drawing.Point(163, 220);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(164, 26);
             this.textBox4.TabIndex = 12;
@@ -177,7 +177,7 @@
             "US",
             "Canada",
             "Norway"});
-            this.countryComboBox.Location = new System.Drawing.Point(440, 31);
+            this.countryComboBox.Location = new System.Drawing.Point(441, 60);
             this.countryComboBox.Name = "countryComboBox";
             this.countryComboBox.Size = new System.Drawing.Size(121, 28);
             this.countryComboBox.TabIndex = 13;
@@ -192,7 +192,7 @@
             "Toronto",
             "Vancouver",
             "Oslo"});
-            this.cityComboBox.Location = new System.Drawing.Point(440, 69);
+            this.cityComboBox.Location = new System.Drawing.Point(441, 98);
             this.cityComboBox.Name = "cityComboBox";
             this.cityComboBox.Size = new System.Drawing.Size(121, 28);
             this.cityComboBox.TabIndex = 14;
@@ -201,7 +201,7 @@
             // 
             this.yesRadioButton.AutoSize = true;
             this.yesRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.yesRadioButton.Location = new System.Drawing.Point(162, 230);
+            this.yesRadioButton.Location = new System.Drawing.Point(163, 259);
             this.yesRadioButton.Name = "yesRadioButton";
             this.yesRadioButton.Size = new System.Drawing.Size(55, 24);
             this.yesRadioButton.TabIndex = 15;
@@ -213,7 +213,7 @@
             // 
             this.noRadioButton.AutoSize = true;
             this.noRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.noRadioButton.Location = new System.Drawing.Point(223, 230);
+            this.noRadioButton.Location = new System.Drawing.Point(224, 259);
             this.noRadioButton.Name = "noRadioButton";
             this.noRadioButton.Size = new System.Drawing.Size(47, 24);
             this.noRadioButton.TabIndex = 16;
@@ -230,6 +230,7 @@
             this.saveButton.TabIndex = 17;
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // cancelButton
             // 
