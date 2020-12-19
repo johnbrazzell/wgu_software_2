@@ -20,28 +20,82 @@ namespace wgu_software_2
         public AddCustomerForm()
         {
             InitializeComponent();
-            
+            DBHelper.OpenConnection();
+            _connection = DBHelper.GetConnection();
+
+
         }
 
         //Need function to add the address first and return the address ID to add to customer record
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            //AddNewAddress();
-            if(yesRadioButton.Checked)
-            {
-                _activeCustomer = true;
-            }
-            else if(noRadioButton.Checked)
-            {
-                _activeCustomer = false;
-            }
-                
+
+            AddNewAddress();
             AddNewCustomer();
+           
         }
 
-        private void AddNewCustomer()
+        private void AddNewAddress()
         {
+
+            DBHelper.OpenConnection();
+            _newAddressID = GetNewAddressID();
+          //  _newCustomerID = GetNewCustomerID();
+
+            _connection = DBHelper.GetConnection();
+            //MySqlConnection connection = DBHelper.GetConnection();
+            MySqlCommand command = _connection.CreateCommand();
+
+            DateTime dt = DateTime.UtcNow;
+
+            int _cityID = 0;
+
+            switch (cityComboBox.Text)
+            {
+                case "New York":
+                    _cityID = 1;
+                    break;
+                case "Los Angeles":
+                    _cityID = 2;
+                    break;
+                case "Toronto":
+                    _cityID = 3;
+                    break;
+                case "Vancouver":
+                    _cityID = 4;
+                    break;
+                case "Oslo":
+                    _cityID = 5;
+                    break;
+                default:
+                    Console.WriteLine("default case");
+                    break;
+
+            }
+            //Address DB Fields
+            //addressId
+            //address2
+            //cityId
+            //postalCode
+            //phone
+            //createDate
+            //createdBy
+            //lastUpdate
+            //lastUpdateBy
+            command.CommandText = "INSERT INTO address (addressId, address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy)" +
+                "VALUES (@addressID, @address, @address2, @cityID, @postalCode, @phone, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
+
+            command.Parameters.AddWithValue("@addressID", _newAddressID);
+            command.Parameters.AddWithValue("@address", addressTextBox.Text.Trim());
+            command.Parameters.AddWithValue("@address2", address2TextBox.Text.Trim());
+            command.Parameters.AddWithValue("@cityID", _cityID);
+            command.Parameters.AddWithValue("@postalCode", postalCodeTextBox.Text.Trim());
+            command.Parameters.AddWithValue("@phone", phoneTextBox.Text.Trim());
+            command.Parameters.AddWithValue("@createDate", dt);
+            command.Parameters.AddWithValue("@createdBy", "test");
+            command.Parameters.AddWithValue("@lastUpdate", dt);
+            command.Parameters.AddWithValue("@lastUpdateBy", "test");
             //Fields to add from form
             //Name 
             //Address 1
@@ -57,43 +111,25 @@ namespace wgu_software_2
             //create new record in address database
             //INSERT INTO 'table name' (column1, column2, ...)
             //VALUES (value1, value2, ...)
-            DBHelper.OpenConnection();
-
-            _newAddressID = GetNewAddressID();
-            _newCustomerID = GetNewCustomerID();
-
-            _connection = DBHelper.GetConnection();
-            //MySqlConnection connection = DBHelper.GetConnection();
-            MySqlCommand command = _connection.CreateCommand();
-
-            DateTime dt = DateTime.UtcNow;
-
-            //MessageBox.Show(_newCustomerID.ToString(), "After The Increment");
-
-            command.CommandText = "INSERT INTO customer (customerId, customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy) VALUES(@customerID, @customerName, @addressID, " +
-                "@active, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
-            command.Parameters.AddWithValue("@customerID", _newCustomerID);
-            command.Parameters.AddWithValue("@customerName", nameTextBox.Text);
-            command.Parameters.AddWithValue("@addressID", _newAddressID);
-            command.Parameters.AddWithValue("@active", _activeCustomer);
-            command.Parameters.AddWithValue("@createDate", dt);
-            command.Parameters.AddWithValue("@createdBy", "test");
-            command.Parameters.AddWithValue("@lastUpdate", dt);
-            command.Parameters.AddWithValue("@lastUpdateBy", "test");
-
-            //command.Parameters.AddWithValue("@addressID", );
-            //command.Parameters.AddWithValue("@")
             command.ExecuteNonQuery();
             
             //command.Parameters.AddWithValue("@password", password);
         }
 
-        private void AddNewAddress()
+        private void AddNewCustomer()
         {
-            _connection = DBHelper.GetConnection();
+            
             MySqlCommand command = _connection.CreateCommand();
-            command.CommandText = "INSERT INTO address (addressId, address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy) VALUES" +
-                "@addressID, @address, @address2, @cityID, @postalCode, @phone, @lastUpdate, @lastUpdateBy)";
+            command.CommandText = "INSERT INTO customer (customerId, customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy) VALUES(@customerID, @customerName, @addressId, " +
+           "@active, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
+            command.Parameters.AddWithValue("@customerID", _newCustomerID);
+            command.Parameters.AddWithValue("@customerName", nameTextBox.Text);
+            command.Parameters.AddWithValue("@addressId", _newAddressID);
+            command.Parameters.AddWithValue("@active", _activeCustomer);
+           // command.Parameters.AddWithValue("@createDate", );
+            command.Parameters.AddWithValue("@createdBy", "test");
+           // command.Parameters.AddWithValue("@lastUpdate", );
+            command.Parameters.AddWithValue("@lastUpdateBy", "test");
 
             //need to add the address first, return the ID and store it to link to
 
@@ -147,6 +183,27 @@ namespace wgu_software_2
            // MessageBox.Show(_newCustomerID.ToString(), "Before the increment");
 
             return id + 2;
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void yesRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if(yesRadioButton.Checked)
+            {
+                _activeCustomer = true;
+            }
+        }
+
+        private void noRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if(noRadioButton.Checked)
+            {
+                _activeCustomer = false;
+            }
         }
     }
 }

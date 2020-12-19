@@ -38,9 +38,9 @@
             this.cityLabel = new System.Windows.Forms.Label();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.addressTextBox = new System.Windows.Forms.TextBox();
-            this.addresd2TextBox = new System.Windows.Forms.TextBox();
+            this.address2TextBox = new System.Windows.Forms.TextBox();
             this.postalCodeTextBox = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.phoneTextBox = new System.Windows.Forms.TextBox();
             this.countryComboBox = new System.Windows.Forms.ComboBox();
             this.cityComboBox = new System.Windows.Forms.ComboBox();
             this.yesRadioButton = new System.Windows.Forms.RadioButton();
@@ -145,13 +145,13 @@
             this.addressTextBox.Size = new System.Drawing.Size(164, 26);
             this.addressTextBox.TabIndex = 9;
             // 
-            // addresd2TextBox
+            // address2TextBox
             // 
-            this.addresd2TextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addresd2TextBox.Location = new System.Drawing.Point(163, 140);
-            this.addresd2TextBox.Name = "addresd2TextBox";
-            this.addresd2TextBox.Size = new System.Drawing.Size(164, 26);
-            this.addresd2TextBox.TabIndex = 10;
+            this.address2TextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.address2TextBox.Location = new System.Drawing.Point(163, 140);
+            this.address2TextBox.Name = "address2TextBox";
+            this.address2TextBox.Size = new System.Drawing.Size(164, 26);
+            this.address2TextBox.TabIndex = 10;
             // 
             // postalCodeTextBox
             // 
@@ -161,13 +161,13 @@
             this.postalCodeTextBox.Size = new System.Drawing.Size(164, 26);
             this.postalCodeTextBox.TabIndex = 11;
             // 
-            // textBox4
+            // phoneTextBox
             // 
-            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox4.Location = new System.Drawing.Point(163, 220);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(164, 26);
-            this.textBox4.TabIndex = 12;
+            this.phoneTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.phoneTextBox.Location = new System.Drawing.Point(163, 220);
+            this.phoneTextBox.Name = "phoneTextBox";
+            this.phoneTextBox.Size = new System.Drawing.Size(164, 26);
+            this.phoneTextBox.TabIndex = 12;
             // 
             // countryComboBox
             // 
@@ -208,6 +208,7 @@
             this.yesRadioButton.TabStop = true;
             this.yesRadioButton.Text = "Yes";
             this.yesRadioButton.UseVisualStyleBackColor = true;
+            this.yesRadioButton.CheckedChanged += new System.EventHandler(this.yesRadioButton_CheckedChanged);
             // 
             // noRadioButton
             // 
@@ -220,6 +221,7 @@
             this.noRadioButton.TabStop = true;
             this.noRadioButton.Text = "No";
             this.noRadioButton.UseVisualStyleBackColor = true;
+            this.noRadioButton.CheckedChanged += new System.EventHandler(this.noRadioButton_CheckedChanged);
             // 
             // saveButton
             // 
@@ -241,6 +243,7 @@
             this.cancelButton.TabIndex = 18;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // AddCustomerForm
             // 
@@ -253,9 +256,9 @@
             this.Controls.Add(this.noRadioButton);
             this.Controls.Add(this.cityComboBox);
             this.Controls.Add(this.countryComboBox);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.phoneTextBox);
             this.Controls.Add(this.postalCodeTextBox);
-            this.Controls.Add(this.addresd2TextBox);
+            this.Controls.Add(this.address2TextBox);
             this.Controls.Add(this.addressTextBox);
             this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.cityLabel);
@@ -285,9 +288,9 @@
         private System.Windows.Forms.Label cityLabel;
         private System.Windows.Forms.TextBox nameTextBox;
         private System.Windows.Forms.TextBox addressTextBox;
-        private System.Windows.Forms.TextBox addresd2TextBox;
+        private System.Windows.Forms.TextBox address2TextBox;
         private System.Windows.Forms.TextBox postalCodeTextBox;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox phoneTextBox;
         private System.Windows.Forms.ComboBox countryComboBox;
         private System.Windows.Forms.ComboBox cityComboBox;
         private System.Windows.Forms.RadioButton yesRadioButton;
