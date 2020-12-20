@@ -33,6 +33,9 @@ namespace wgu_software_2
 
             AddNewAddress();
             AddNewCustomer();
+
+           // MySqlCommand cmd = 
+            this.Close();
            
         }
 
@@ -41,7 +44,7 @@ namespace wgu_software_2
 
             DBHelper.OpenConnection();
             _newAddressID = GetNewAddressID();
-          //  _newCustomerID = GetNewCustomerID();
+            _newCustomerID = GetNewCustomerID();
 
             _connection = DBHelper.GetConnection();
             //MySqlConnection connection = DBHelper.GetConnection();
@@ -118,19 +121,59 @@ namespace wgu_software_2
 
         private void AddNewCustomer()
         {
-            
+            int addressID = 0;
+            DateTime createDate = new DateTime();
+            DateTime lastUpdate = new DateTime();
+            string createUser = "";
+            string updateUser = "";
+
+
+            //select data and use reader first and add to variables
+            //then execute nonquery and add all data to customer record
+            //
             MySqlCommand command = _connection.CreateCommand();
-            command.CommandText = "INSERT INTO customer (customerId, customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy) VALUES(@customerID, @customerName, @addressId, " +
+
+            //loginCheckCommand.CommandText = "SELECT * FROM user WHERE userName=@username AND password=@password";
+            //loginCheckCommand.Parameters.AddWithValue("@username", userName);
+            //loginCheckCommand.Parameters.AddWithValue("@password", password);
+            command.CommandText = "SELECT addressId, createDate, createdBy, lastUpdate, lastUpdateBy FROM address WHERE addressId = @id";
+            command.Parameters.AddWithValue("@id", _newAddressID);
+
+            MySqlDataReader reader = command.ExecuteReader();
+
+          
+                if (reader.Read())
+                {
+                    bool p = Int32.TryParse(reader["addressId"].ToString(), out addressID);
+                    createDate = (DateTime)reader["createDate"];
+                    createUser = reader["createdBy"].ToString();
+                    lastUpdate = (DateTime)reader["lastUpdate"];
+                    updateUser = reader["lastUpdateBy"].ToString();
+                }
+            
+
+            reader.Close();
+
+            //MySqlDataReader loginReader = loginCheckCommand.ExecuteReader();
+
+            //MySqlCommand command2 = _connection.CreateCommand();
+            command.CommandText = "INSERT INTO customer (customerId, customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy) VALUES(@customerID, @customerName, @addressID," +
            "@active, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
             command.Parameters.AddWithValue("@customerID", _newCustomerID);
             command.Parameters.AddWithValue("@customerName", nameTextBox.Text);
-            command.Parameters.AddWithValue("@addressId", _newAddressID);
+            command.Parameters.AddWithValue("@addressID", _newAddressID);
             command.Parameters.AddWithValue("@active", _activeCustomer);
-           // command.Parameters.AddWithValue("@createDate", );
-            command.Parameters.AddWithValue("@createdBy", "test");
-           // command.Parameters.AddWithValue("@lastUpdate", );
-            command.Parameters.AddWithValue("@lastUpdateBy", "test");
+            command.Parameters.AddWithValue("@createDate", createDate);
+            command.Parameters.AddWithValue("@createdBy", createUser);
+            command.Parameters.AddWithValue("@lastUpdate", lastUpdate);
+            command.Parameters.AddWithValue("@lastUpdateBy", updateUser);
 
+           // command2.CommandText = "INSERT INTO customer (addressId, createDate, createdBy, lastUpdate, lastUpdateBy)" +
+           //     "SELECT (addressId, createDate, createdBy, lastUpdate, lastUpdateBy) FROM address WHERE addressId = @addID";
+           // command2.Parameters.AddWithValue("@addID", _newAddressID);
+
+            //command2.ExecuteNonQuery();
+            command.ExecuteNonQuery();
             //need to add the address first, return the ID and store it to link to
 
         }
@@ -146,11 +189,12 @@ namespace wgu_software_2
             while(reader.Read())
             {
                 id = (int)reader["addressId"];
+                bool parseResult = Int32.TryParse(reader["addressId"].ToString(), out id); 
             }
             reader.Close();
 
             MessageBox.Show(id.ToString());
-            return id + 2;
+            return id + 1;
         }
 
         private int GetNewCustomerID()
@@ -182,7 +226,7 @@ namespace wgu_software_2
 
            // MessageBox.Show(_newCustomerID.ToString(), "Before the increment");
 
-            return id + 2;
+            return id + 1;
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
