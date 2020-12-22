@@ -13,14 +13,15 @@ namespace wgu_software_2
 {
     public partial class UpdateCustomerForm : Form
     {
-        int _newCustomerID;
-        int _newAddressID;
+
         bool _activeCustomer;
         MySqlConnection _connection;
 
         List<string> _countryList = new List<string>() { "US", "Canada", "Norway" };
         List<string> _cityList = new List<string>() { "New York", "Los Angeles", "Toronto", "Vancouver", "Oslo" };
-      
+
+        int _addressID = 0;
+        int _customerID = 0;
         public UpdateCustomerForm(int id)
         {
             InitializeComponent();
@@ -28,7 +29,7 @@ namespace wgu_software_2
             _connection = DBHelper.GetConnection();
             //load data using the id provided
 
-
+            _customerID = id;
             //Update the comboBoxes with list values
             countryComboBox.Items.Clear();
             //countryComboBox.Items.Add(_countryList);
@@ -43,7 +44,7 @@ namespace wgu_software_2
 
             MySqlDataReader customerReader = command.ExecuteReader();
             bool activeCustomer;
-            int addressID = 0;
+            //int addressID = 0;
             int cityID = 0;
             int countryID = 0;
             string city = "";
@@ -69,9 +70,9 @@ namespace wgu_software_2
                     }
 
                     //bool n = Int32.TryParse(reader["addressId"].ToString(), out addressID);
-                    addressID = (int)customerReader["addressId"];
+                    _addressID = (int)customerReader["addressId"];
 
-                    MessageBox.Show("Address ID for Update: " + addressID);
+                    MessageBox.Show("Address ID for Update: " + _addressID);
                     customerReader.Close();
 
                
@@ -82,7 +83,7 @@ namespace wgu_software_2
            // MessageBox.Show("Address ID: " + addressID.ToString());
             //read information from address and populate form
             command.CommandText = "SELECT * FROM address WHERE addressId = @addressID";
-            command.Parameters.AddWithValue("@addressID", addressID);
+            command.Parameters.AddWithValue("@addressID", _addressID);
             //MessageBox.Show("AddressID as parameter" + addressID);
             MySqlDataReader addressReader = command.ExecuteReader();
 
@@ -147,27 +148,38 @@ namespace wgu_software_2
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+            DateTime dt = DateTime.UtcNow;
+            string dateString = dt.ToShortDateString();
 
-            AddNewAddress();
-            AddNewCustomer();
+            try
+            {
 
+                dt = DateTime.Parse(dateString);
+            }
+            catch(FormatException)
+            {
+                MessageBox.Show("Unable to format parse date string");
+            }
+           // MessageBox.Show(str);
+            UpdateAddress(dt);
+            UpdateCustomer(dt);
     
             this.Close();
            
         }
 
-        private void AddNewAddress()
+        private void UpdateAddress(DateTime date)
         {
 
             DBHelper.OpenConnection();
-            _newAddressID = GetNewAddressID();
-            _newCustomerID = GetNewCustomerID();
+           // _newAddressID = GetNewAddressID();
+           // _newCustomerID = GetNewCustomerID();
 
             _connection = DBHelper.GetConnection();
             //MySqlConnection connection = DBHelper.GetConnection();
             MySqlCommand command = _connection.CreateCommand();
 
-            DateTime dt = DateTime.UtcNow;
+          
 
             int _cityID = 0;
 
@@ -203,19 +215,18 @@ namespace wgu_software_2
             //createdBy
             //lastUpdate
             //lastUpdateBy
-            command.CommandText = "INSERT INTO address (addressId, address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy)" +
-                "VALUES (@addressID, @address, @address2, @cityID, @postalCode, @phone, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
-
-            command.Parameters.AddWithValue("@addressID", _newAddressID);
+            //command.CommandText = "INSERT INTO address (addressId, address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy)" +
+            //    "VALUES (@addressID, @address, @address2, @cityID, @postalCode, @phone, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
+            command.CommandText = "UPDATE address SET address=@address, address2=@address2, cityId=@cityID, postalCode=@postalCode," +
+                "phone=@phone, lastUpdate=@lastUpdate, lastUpdateBy=@lastUpdateBy WHERE addressId=@addressID";
+            command.Parameters.AddWithValue("@addressID", _addressID);
             command.Parameters.AddWithValue("@address", addressTextBox.Text.Trim());
             command.Parameters.AddWithValue("@address2", address2TextBox.Text.Trim());
             command.Parameters.AddWithValue("@cityID", _cityID);
             command.Parameters.AddWithValue("@postalCode", postalCodeTextBox.Text.Trim());
             command.Parameters.AddWithValue("@phone", phoneTextBox.Text.Trim());
-            command.Parameters.AddWithValue("@createDate", dt);
-            command.Parameters.AddWithValue("@createdBy", "test");
-            command.Parameters.AddWithValue("@lastUpdate", dt);
             command.Parameters.AddWithValue("@lastUpdateBy", "test");
+            command.Parameters.AddWithValue("@lastUpdate", date);
             //Fields to add from form
             //Name 
             //Address 1
@@ -236,54 +247,64 @@ namespace wgu_software_2
             //command.Parameters.AddWithValue("@password", password);
         }
 
-        private void AddNewCustomer()
+        private void UpdateCustomer(DateTime date)
         {
-            int addressID = 0;
-            DateTime createDate = new DateTime();
-            DateTime lastUpdate = new DateTime();
-            string createUser = "";
-            string updateUser = "";
+           
 
-
-            //select data and use reader first and add to variables
-            //then execute nonquery and add all data to customer record
-            //
             MySqlCommand command = _connection.CreateCommand();
 
             //loginCheckCommand.CommandText = "SELECT * FROM user WHERE userName=@username AND password=@password";
             //loginCheckCommand.Parameters.AddWithValue("@username", userName);
             //loginCheckCommand.Parameters.AddWithValue("@password", password);
-            command.CommandText = "SELECT addressId, createDate, createdBy, lastUpdate, lastUpdateBy FROM address WHERE addressId = @id";
-            command.Parameters.AddWithValue("@id", _newAddressID);
+            //command.CommandText = "SELECT addressId, createDate, createdBy, lastUpdate, lastUpdateBy FROM address WHERE addressId = @id";
+            command.CommandText = "UPDATE customer SET customerName=@customerName, active=@active, lastUpdate=@lastUpdate, lastUpdateBy=@lastUpdateBy " +
+                "WHERE customerId=@customerID";
+            command.Parameters.AddWithValue("@customerID", _customerID);
+            command.Parameters.AddWithValue("@customerName", nameTextBox.Text);
+      
+            if(yesRadioButton.Checked)
+            {
+                command.Parameters.AddWithValue("@active", yesRadioButton.Checked);
 
-            MySqlDataReader reader = command.ExecuteReader();
+            }
+            else
+            {
+                command.Parameters.AddWithValue("@active", noRadioButton.Checked);
+            }
 
-          
-                if (reader.Read())
-                {
-                    bool p = Int32.TryParse(reader["addressId"].ToString(), out addressID);
-                    createDate = (DateTime)reader["createDate"];
-                    createUser = reader["createdBy"].ToString();
-                    lastUpdate = (DateTime)reader["lastUpdate"];
-                    updateUser = reader["lastUpdateBy"].ToString();
-                }
-            
+        
 
-            reader.Close();
+            command.Parameters.AddWithValue("@lastUpdateBy", "test");
+            command.Parameters.AddWithValue("@lastUpdate", date);
+
+            //MySqlDataReader reader = command.ExecuteReader();
+
+
+            //    if (reader.Read())
+            //    {
+            //        bool p = Int32.TryParse(reader["addressId"].ToString(), out addressID);
+            //        createDate = (DateTime)reader["createDate"];
+            //        createUser = reader["createdBy"].ToString();
+            //        lastUpdate = (DateTime)reader["lastUpdate"];
+            //        updateUser = reader["lastUpdateBy"].ToString();
+            //    }
+
+
+            //   reader.Close();
 
             //MySqlDataReader loginReader = loginCheckCommand.ExecuteReader();
 
-            //MySqlCommand command2 = _connection.CreateCommand();
-            command.CommandText = "INSERT INTO customer (customerId, customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy) VALUES(@customerID, @customerName, @addressID," +
-           "@active, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
-            command.Parameters.AddWithValue("@customerID", _newCustomerID);
-            command.Parameters.AddWithValue("@customerName", nameTextBox.Text);
-            command.Parameters.AddWithValue("@addressID", _newAddressID);
-            command.Parameters.AddWithValue("@active", _activeCustomer);
-            command.Parameters.AddWithValue("@createDate", createDate);
-            command.Parameters.AddWithValue("@createdBy", createUser);
-            command.Parameters.AddWithValue("@lastUpdate", lastUpdate);
-            command.Parameters.AddWithValue("@lastUpdateBy", updateUser);
+            // //MySqlCommand command2 = _connection.CreateCommand();
+            // command.CommandText = "INSERT INTO customer (customerId, customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy) VALUES(@customerID, @customerName, @addressID," +
+            //"@active, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
+            // command.Parameters.AddWithValue("@customerID", _customerID);
+            // command.Parameters.AddWithValue("@customerName", nameTextBox.Text);
+            // command.Parameters.AddWithValue("@addressID", _newAddressID);
+            // command.Parameters.AddWithValue("@active", _activeCustomer);
+            // command.Parameters.AddWithValue("@createDate", createDate);
+            // command.Parameters.AddWithValue("@createdBy", createUser);
+            // command.Parameters.AddWithValue("@lastUpdate", lastUpdate);
+            // command.Parameters.AddWithValue("@lastUpdateBy", updateUser);
 
             command.ExecuteNonQuery();
         
@@ -345,6 +366,8 @@ namespace wgu_software_2
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
+          
+            
             this.Close();
         }
 
