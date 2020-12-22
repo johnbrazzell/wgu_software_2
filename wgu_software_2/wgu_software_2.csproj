@@ -47,6 +47,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddAppointmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddAppointmentForm.Designer.cs">
+      <DependentUpon>AddAppointmentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AppointmentBaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AppointmentBaseForm.Designer.cs">
+      <DependentUpon>AppointmentBaseForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UpdateCustomerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,6 +86,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddAppointmentForm.resx">
+      <DependentUpon>AddAppointmentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AppointmentBaseForm.resx">
+      <DependentUpon>AppointmentBaseForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UpdateCustomerForm.resx">
       <DependentUpon>UpdateCustomerForm.cs</DependentUpon>
     </EmbeddedResource>

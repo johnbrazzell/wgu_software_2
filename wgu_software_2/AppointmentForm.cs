@@ -82,7 +82,9 @@ namespace wgu_software_2
 
         private void addAppointmentButton_Click(object sender, EventArgs e)
         {
+            AddAppointmentForm form = new AddAppointmentForm();
 
+            form.Show();
         }
 
         private void updateCustomerButton_Click(object sender, EventArgs e)

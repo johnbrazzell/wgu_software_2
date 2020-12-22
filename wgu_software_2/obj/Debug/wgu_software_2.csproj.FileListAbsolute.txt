@@ -54,3 +54,5 @@ C:\Users\jbraz\source\repos\wgu_software_2\wgu_software_2\obj\Debug\wgu_software
 C:\Users\John\Documents\GitHub\wgu_software_2\wgu_software_2\obj\Debug\wgu_software_2.AddCustomerForm.resources
 C:\Users\jbraz\source\repos\wgu_software_2\wgu_software_2\obj\Debug\wgu_software_2.AddCustomerForm.resources
 C:\Users\jbraz\source\repos\wgu_software_2\wgu_software_2\obj\Debug\wgu_software_2.UpdateCustomerForm.resources
+C:\Users\jbraz\source\repos\wgu_software_2\wgu_software_2\obj\Debug\wgu_software_2.AppointmentBaseForm.resources
+C:\Users\jbraz\source\repos\wgu_software_2\wgu_software_2\obj\Debug\wgu_software_2.AddAppointmentForm.resources

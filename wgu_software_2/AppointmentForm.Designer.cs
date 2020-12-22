@@ -41,6 +41,8 @@ namespace wgu_software_2
             this.deleteCustomerButton = new System.Windows.Forms.Button();
             this.addCustomerButton = new System.Windows.Forms.Button();
             this.customerGridView = new System.Windows.Forms.DataGridView();
+            this.updateAppointmentButton = new System.Windows.Forms.Button();
+            this.deleteAppointmentButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.appointmentDataGridView)).BeginInit();
             this.appointmentScheduleTabs.SuspendLayout();
             this.appointmentTabView.SuspendLayout();
@@ -51,20 +53,21 @@ namespace wgu_software_2
             // calendar
             // 
             this.calendar.FirstDayOfWeek = System.Windows.Forms.Day.Sunday;
-            this.calendar.Location = new System.Drawing.Point(29, 56);
+            this.calendar.Location = new System.Drawing.Point(64, 224);
             this.calendar.MaxSelectionCount = 1;
             this.calendar.Name = "calendar";
+            this.calendar.ShowWeekNumbers = true;
             this.calendar.TabIndex = 0;
             this.calendar.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.calendar_DateChanged);
             // 
             // appointmentDataGridView
             // 
             this.appointmentDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.appointmentDataGridView.Location = new System.Drawing.Point(282, 56);
+            this.appointmentDataGridView.Location = new System.Drawing.Point(372, 68);
             this.appointmentDataGridView.Name = "appointmentDataGridView";
             this.appointmentDataGridView.ReadOnly = true;
             this.appointmentDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.appointmentDataGridView.Size = new System.Drawing.Size(438, 283);
+            this.appointmentDataGridView.Size = new System.Drawing.Size(569, 358);
             this.appointmentDataGridView.TabIndex = 1;
             // 
             // appointmentFilterComboBox
@@ -74,7 +77,7 @@ namespace wgu_software_2
             this.appointmentFilterComboBox.Items.AddRange(new object[] {
             "Month",
             "Week"});
-            this.appointmentFilterComboBox.Location = new System.Drawing.Point(358, 15);
+            this.appointmentFilterComboBox.Location = new System.Drawing.Point(181, 136);
             this.appointmentFilterComboBox.MaxDropDownItems = 2;
             this.appointmentFilterComboBox.Name = "appointmentFilterComboBox";
             this.appointmentFilterComboBox.Size = new System.Drawing.Size(121, 28);
@@ -89,20 +92,22 @@ namespace wgu_software_2
             this.appointmentScheduleTabs.Multiline = true;
             this.appointmentScheduleTabs.Name = "appointmentScheduleTabs";
             this.appointmentScheduleTabs.SelectedIndex = 0;
-            this.appointmentScheduleTabs.Size = new System.Drawing.Size(776, 417);
+            this.appointmentScheduleTabs.Size = new System.Drawing.Size(980, 548);
             this.appointmentScheduleTabs.TabIndex = 3;
             // 
             // appointmentTabView
             // 
-            this.appointmentTabView.Controls.Add(this.addAppointmentButton);
+            this.appointmentTabView.Controls.Add(this.deleteAppointmentButton);
+            this.appointmentTabView.Controls.Add(this.updateAppointmentButton);
             this.appointmentTabView.Controls.Add(this.filterLabel);
             this.appointmentTabView.Controls.Add(this.calendar);
+            this.appointmentTabView.Controls.Add(this.addAppointmentButton);
             this.appointmentTabView.Controls.Add(this.appointmentFilterComboBox);
             this.appointmentTabView.Controls.Add(this.appointmentDataGridView);
             this.appointmentTabView.Location = new System.Drawing.Point(4, 22);
             this.appointmentTabView.Name = "appointmentTabView";
             this.appointmentTabView.Padding = new System.Windows.Forms.Padding(3);
-            this.appointmentTabView.Size = new System.Drawing.Size(768, 391);
+            this.appointmentTabView.Size = new System.Drawing.Size(972, 522);
             this.appointmentTabView.TabIndex = 0;
             this.appointmentTabView.Text = "Appointments";
             this.appointmentTabView.UseVisualStyleBackColor = true;
@@ -110,7 +115,7 @@ namespace wgu_software_2
             // addAppointmentButton
             // 
             this.addAppointmentButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addAppointmentButton.Location = new System.Drawing.Point(50, 272);
+            this.addAppointmentButton.Location = new System.Drawing.Point(102, 460);
             this.addAppointmentButton.Name = "addAppointmentButton";
             this.addAppointmentButton.Size = new System.Drawing.Size(176, 48);
             this.addAppointmentButton.TabIndex = 4;
@@ -122,7 +127,7 @@ namespace wgu_software_2
             // 
             this.filterLabel.AutoSize = true;
             this.filterLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.filterLabel.Location = new System.Drawing.Point(278, 18);
+            this.filterLabel.Location = new System.Drawing.Point(60, 140);
             this.filterLabel.Name = "filterLabel";
             this.filterLabel.Size = new System.Drawing.Size(74, 24);
             this.filterLabel.TabIndex = 3;
@@ -184,11 +189,31 @@ namespace wgu_software_2
             this.customerGridView.TabIndex = 0;
             this.customerGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.customerGridView_CellContentClick);
             // 
+            // updateAppointmentButton
+            // 
+            this.updateAppointmentButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.updateAppointmentButton.Location = new System.Drawing.Point(358, 460);
+            this.updateAppointmentButton.Name = "updateAppointmentButton";
+            this.updateAppointmentButton.Size = new System.Drawing.Size(176, 48);
+            this.updateAppointmentButton.TabIndex = 5;
+            this.updateAppointmentButton.Text = "Update Appointment";
+            this.updateAppointmentButton.UseVisualStyleBackColor = true;
+            // 
+            // deleteAppointmentButton
+            // 
+            this.deleteAppointmentButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.deleteAppointmentButton.Location = new System.Drawing.Point(597, 450);
+            this.deleteAppointmentButton.Name = "deleteAppointmentButton";
+            this.deleteAppointmentButton.Size = new System.Drawing.Size(176, 48);
+            this.deleteAppointmentButton.TabIndex = 6;
+            this.deleteAppointmentButton.Text = "Delete Appointment";
+            this.deleteAppointmentButton.UseVisualStyleBackColor = true;
+            // 
             // AppointmentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1004, 561);
             this.Controls.Add(this.appointmentScheduleTabs);
             this.Name = "AppointmentForm";
             this.Text = "Appointment Scheduler - Main Screen";
@@ -216,5 +241,7 @@ namespace wgu_software_2
         private System.Windows.Forms.Button addCustomerButton;
         private System.Windows.Forms.DataGridView customerGridView;
         private System.Windows.Forms.Button updateCustomerButton;
+        private System.Windows.Forms.Button deleteAppointmentButton;
+        private System.Windows.Forms.Button updateAppointmentButton;
     }
 }
