@@ -16,6 +16,7 @@ namespace wgu_software_2
 
         bool _activeCustomer;
         MySqlConnection _connection;
+        AppointmentForm appointmentForm;
 
         List<string> _countryList = new List<string>() { "US", "Canada", "Norway" };
         List<string> _cityList = new List<string>() { "New York", "Los Angeles", "Toronto", "Vancouver", "Oslo" };
@@ -27,8 +28,10 @@ namespace wgu_software_2
             InitializeComponent();
             DBHelper.OpenConnection();
             _connection = DBHelper.GetConnection();
-            //load data using the id provided
+            appointmentForm = Application.OpenForms["AppointmentForm"] as AppointmentForm;
 
+
+            //load data using the id provided
             _customerID = id;
             //Update the comboBoxes with list values
             countryComboBox.Items.Clear();
@@ -163,6 +166,8 @@ namespace wgu_software_2
            // MessageBox.Show(str);
             UpdateAddress(dt);
             UpdateCustomer(dt);
+
+            appointmentForm.UpdateCustomerForm();
     
             this.Close();
            

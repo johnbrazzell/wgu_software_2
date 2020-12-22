@@ -17,8 +17,8 @@ namespace wgu_software_2
 
         MySqlDataAdapter _adapter;
         MySqlConnection _connection;
-        DataSet _appointmentDataSet = new DataSet();
-        DataSet _customerDataSet = new DataSet();
+        DataSet _appointmentDataSet;
+        DataSet _customerDataSet;
         public AppointmentForm()
         {
             InitializeComponent();
@@ -27,19 +27,25 @@ namespace wgu_software_2
             
             _connection = DBHelper.GetConnection();
 
-            PopulateDataGridViews();
+            
+            UpdateCustomerForm();
            // MySqlDataReader reader = DBHelper.ExecuteQuery("test");
         }
 
         public void UpdateCustomerForm()
         {
-            customerGridView.Update();
             customerGridView.Refresh();
+            customerGridView.Update();
             PopulateDataGridViews();
         }
 
         private void PopulateDataGridViews()
         {
+            _appointmentDataSet = null;
+            _appointmentDataSet = new DataSet();
+            _customerDataSet = null;
+            _customerDataSet = new DataSet();
+
             _adapter = new MySqlDataAdapter("SELECT * FROM appointment", _connection);
             _adapter.Fill(_appointmentDataSet);
             this.appointmentDataGridView.DataSource = _appointmentDataSet.Tables[0];
@@ -47,7 +53,7 @@ namespace wgu_software_2
             _adapter = new MySqlDataAdapter("SELECT * FROM customer", _connection);
             _adapter.Fill(_customerDataSet);
             this.customerGridView.DataSource = _customerDataSet.Tables[0];
-
+            
 
         }
 
