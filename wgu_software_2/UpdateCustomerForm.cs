@@ -17,14 +17,10 @@ namespace wgu_software_2
         int _newAddressID;
         bool _activeCustomer;
         MySqlConnection _connection;
-        //public UpdateCustomerForm()
-        //{
-        //    InitializeComponent();
-        //    DBHelper.OpenConnection();
-        //    _connection = DBHelper.GetConnection();
-         
 
-        //}
+        List<string> _countryList = new List<string>() { "US", "Canada", "Norway" };
+        List<string> _cityList = new List<string>() { "New York", "Los Angeles", "Toronto", "Vancouver", "Oslo" };
+      
         public UpdateCustomerForm(int id)
         {
             InitializeComponent();
@@ -32,8 +28,15 @@ namespace wgu_software_2
             _connection = DBHelper.GetConnection();
             //load data using the id provided
 
-            MySqlCommand command = _connection.CreateCommand();
 
+            //Update the comboBoxes with list values
+            countryComboBox.Items.Clear();
+            //countryComboBox.Items.Add(_countryList);
+            _countryList.ForEach(country => countryComboBox.Items.Add(country)); //Used this format instead of looping or adding items individually
+
+            cityComboBox.Items.Clear();
+
+            MySqlCommand command = _connection.CreateCommand();
             
             command.CommandText = "SELECT * FROM customer WHERE customerId = @id";
             command.Parameters.AddWithValue("@id", id);
@@ -41,6 +44,9 @@ namespace wgu_software_2
             MySqlDataReader customerReader = command.ExecuteReader();
             bool activeCustomer;
             int addressID = 0;
+            int cityID = 0;
+            int countryID = 0;
+            string city = "";
             
             //read information from customer and populate form with information
             if(customerReader.HasRows)
@@ -77,7 +83,7 @@ namespace wgu_software_2
             //read information from address and populate form
             command.CommandText = "SELECT * FROM address WHERE addressId = @addressID";
             command.Parameters.AddWithValue("@addressID", addressID);
-            MessageBox.Show("AddressID as parameter" + addressID);
+            //MessageBox.Show("AddressID as parameter" + addressID);
             MySqlDataReader addressReader = command.ExecuteReader();
 
             if(addressReader.HasRows)
@@ -88,12 +94,51 @@ namespace wgu_software_2
                     address2TextBox.Text = addressReader["address2"].ToString();
                     postalCodeTextBox.Text = addressReader["postalCode"].ToString();
                     phoneTextBox.Text = addressReader["phone"].ToString();
-
+                    cityID = (int)addressReader["cityId"];
                 }
 
                 
             }
             addressReader.Close();
+
+
+            command.CommandText = "SELECT * FROM city WHERE cityId = @cityID";
+            command.Parameters.AddWithValue("@cityID", cityID);
+            MySqlDataReader cityReader = command.ExecuteReader();
+
+            if(cityReader.HasRows)
+            {
+                if(cityReader.Read())
+                {
+                    countryID = (int)cityReader["countryId"];
+                    city = cityReader["city"].ToString();
+                    
+                }
+
+            }
+            cityReader.Close();
+
+            command.CommandText = "SELECT * FROM country WHERE countryId = @countryID";
+            command.Parameters.AddWithValue("@countryID", countryID);
+            MySqlDataReader countryReader = command.ExecuteReader();
+
+            if (countryReader.HasRows)
+            {
+                if (countryReader.Read())
+                {
+                    string country = countryReader["country"].ToString();
+                    countryComboBox.SelectedItem = country;
+                    cityComboBox.SelectedItem = city;
+                }
+            }
+
+        //this.countryComboBox.SelectedIndexChanged +=
+        //new System.EventHandler(countryComboBox_SelectedIndexChanged);
+
+
+            //need to get the cityId and then load the country based on what city it is
+            //or get the cityId, then CountryId,
+
 
         }
 
@@ -243,6 +288,8 @@ namespace wgu_software_2
             command.ExecuteNonQuery();
         
 
+           
+
         }
 
         private int GetNewAddressID()
@@ -314,6 +361,29 @@ namespace wgu_software_2
             if(noRadioButton.Checked)
             {
                 _activeCustomer = false;
+            }
+        }
+
+        private void countryComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (countryComboBox.SelectedIndex)
+            {
+                case 0:
+                    //Make sure only US cities are available to select
+                    cityComboBox.Items.Clear();
+                    cityComboBox.Items.Add(_cityList[0]);
+                    cityComboBox.Items.Add(_cityList[1]);
+
+                    break;
+                case 1:
+                    cityComboBox.Items.Clear();
+                    cityComboBox.Items.Add(_cityList[2]);
+                    cityComboBox.Items.Add(_cityList[3]);
+                    break;
+                case 2:
+                    cityComboBox.Items.Clear();
+                    cityComboBox.Items.Add(_cityList[4]);
+                    break;
             }
         }
     }

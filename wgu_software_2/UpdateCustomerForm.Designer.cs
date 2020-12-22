@@ -182,6 +182,7 @@
             this.countryComboBox.Name = "countryComboBox";
             this.countryComboBox.Size = new System.Drawing.Size(121, 28);
             this.countryComboBox.TabIndex = 13;
+            this.countryComboBox.SelectedIndexChanged += new System.EventHandler(this.countryComboBox_SelectedIndexChanged);
             // 
             // cityComboBox
             // 
