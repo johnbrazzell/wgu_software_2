@@ -108,5 +108,33 @@ namespace wgu_software_2
             }
 
         }
+
+        private void deleteCustomerButton_Click(object sender, EventArgs e)
+        {
+
+            int customerID;
+            int addressID;
+
+            foreach (DataGridViewRow row in customerGridView.SelectedRows)
+            {
+                bool p = Int32.TryParse(row.Cells[0].Value.ToString(), out customerID);
+                bool q = Int32.TryParse(row.Cells[2].Value.ToString(), out addressID);
+
+                if(p && q)
+                {
+
+                    DBHelper.OpenConnection();
+                    MySqlCommand command = _connection.CreateCommand();
+                    command.CommandText = "DELETE customer, address FROM customer, address WHERE customer.customerId=@customerID AND " +
+                "address.addressId=@addressID";
+                    command.Parameters.AddWithValue("@customerID", customerID);
+                    command.Parameters.AddWithValue("@addressID", addressID);
+                    command.ExecuteNonQuery();
+
+                    UpdateCustomerForm();
+                }
+            }
+
+        }
     }
 }

@@ -160,6 +160,7 @@ namespace wgu_software_2
             this.deleteCustomerButton.TabIndex = 2;
             this.deleteCustomerButton.Text = "Delete Customer";
             this.deleteCustomerButton.UseVisualStyleBackColor = true;
+            this.deleteCustomerButton.Click += new System.EventHandler(this.deleteCustomerButton_Click);
             // 
             // addCustomerButton
             // 
