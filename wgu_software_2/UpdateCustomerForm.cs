@@ -11,35 +11,93 @@ using System.Windows.Forms;
 
 namespace wgu_software_2
 {
-    public partial class AddCustomerForm : Form
+    public partial class UpdateCustomerForm : Form
     {
         int _newCustomerID;
         int _newAddressID;
         bool _activeCustomer;
         MySqlConnection _connection;
-        AppointmentForm appointmentForm;
+        //public UpdateCustomerForm()
+        //{
+        //    InitializeComponent();
+        //    DBHelper.OpenConnection();
+        //    _connection = DBHelper.GetConnection();
+         
 
-        // Country list - 1 US, 2 Canada, 3 Norway
-        // City List - 1 New York, 2 Los Angeles, 3 Toronto, 4 Vancouver, 5 Oslo
-
-        List<string> _countryList = new List<string>() {"US", "Canada", "Norway" };
-        List<string> _cityList = new List<string>() { "New York", "Los Angeles", "Toronto", "Vancouver", "Oslo" };
-
-        public AddCustomerForm()
+        //}
+        public UpdateCustomerForm(int id)
         {
             InitializeComponent();
             DBHelper.OpenConnection();
             _connection = DBHelper.GetConnection();
+            //load data using the id provided
 
-            //Update the comboBoxes with list values
-            countryComboBox.Items.Clear();
-            //countryComboBox.Items.Add(_countryList);
-            _countryList.ForEach(country => countryComboBox.Items.Add(country)); //Used this format instead of looping or adding items individually
+            MySqlCommand command = _connection.CreateCommand();
+
             
-            cityComboBox.Items.Clear();
-            //refresh datagridview
-            appointmentForm = Application.OpenForms["AppointmentForm"] as AppointmentForm;
+            command.CommandText = "SELECT * FROM customer WHERE customerId = @id";
+            command.Parameters.AddWithValue("@id", id);
+
+            MySqlDataReader reader = command.ExecuteReader();
+            bool activeCustomer;
+            int addressID = 0;
+            
+            //read information from customer and populate form with information
+            if(reader.HasRows)
+            {
+                if (reader.Read())
+                {
+                    nameTextBox.Text = reader["customerName"].ToString();
+                    bool p = Boolean.TryParse(reader["active"].ToString(), out activeCustomer);
+
+                    if (p)
+                    {
+                        if (activeCustomer)
+                        {
+                            yesRadioButton.Checked = true;
+                        }
+                        else
+                        {
+                            noRadioButton.Checked = false;
+                        }
+                    }
+
+                    bool n = Int32.TryParse(reader["addressId"].ToString(), out addressID);
+                    reader.Close();
+
+                    if(n)
+                    {
+                        //do shit
+                    }
+                }
+            }
+
+            reader.Close();
+            
+            MessageBox.Show("Address ID: " + addressID.ToString());
+            //read information from address and populate form
+            command.CommandText = "SELECT * FROM address WHERE addressId = @addressID";
+            command.Parameters.AddWithValue("@addressID", addressID);
+
+            command.ExecuteReader();
+
+            if(reader.HasRows)
+            {
+                if(reader.Read())
+                {
+                    addressTextBox.Text = reader["address"].ToString();
+                    address2TextBox.Text = reader["address2"].ToString();
+                    postalCodeTextBox.Text = reader["postalCode"].ToString();
+                    phoneTextBox.Text = reader["phone"].ToString();
+
+                }
+
+                
+            }
+            reader.Close();
+
         }
+
 
         //Need function to add the address first and return the address ID to add to customer record
 
@@ -49,9 +107,7 @@ namespace wgu_software_2
             AddNewAddress();
             AddNewCustomer();
 
-            appointmentForm.UpdateCustomerForm();
-            //Refresh DataGridView
-           // MySqlCommand cmd = 
+    
             this.Close();
            
         }
@@ -116,7 +172,21 @@ namespace wgu_software_2
             command.Parameters.AddWithValue("@createdBy", "test");
             command.Parameters.AddWithValue("@lastUpdate", dt);
             command.Parameters.AddWithValue("@lastUpdateBy", "test");
-          
+            //Fields to add from form
+            //Name 
+            //Address 1
+            //Address 2
+            //Postal Code
+            //Phone
+            //Active Customer - selectable by radio button
+            //Country - selectable in drop down
+            //City - selectable in drop down
+            //get the data in the text fields
+            //create a new record in the customer database
+            //add information into customer database
+            //create new record in address database
+            //INSERT INTO 'table name' (column1, column2, ...)
+            //VALUES (value1, value2, ...)
             command.ExecuteNonQuery();
             
             //command.Parameters.AddWithValue("@password", password);
@@ -130,10 +200,15 @@ namespace wgu_software_2
             string createUser = "";
             string updateUser = "";
 
-            
+
+            //select data and use reader first and add to variables
+            //then execute nonquery and add all data to customer record
+            //
             MySqlCommand command = _connection.CreateCommand();
 
-      
+            //loginCheckCommand.CommandText = "SELECT * FROM user WHERE userName=@username AND password=@password";
+            //loginCheckCommand.Parameters.AddWithValue("@username", userName);
+            //loginCheckCommand.Parameters.AddWithValue("@password", password);
             command.CommandText = "SELECT addressId, createDate, createdBy, lastUpdate, lastUpdateBy FROM address WHERE addressId = @id";
             command.Parameters.AddWithValue("@id", _newAddressID);
 
@@ -152,9 +227,9 @@ namespace wgu_software_2
 
             reader.Close();
 
-   
+            //MySqlDataReader loginReader = loginCheckCommand.ExecuteReader();
 
-      
+            //MySqlCommand command2 = _connection.CreateCommand();
             command.CommandText = "INSERT INTO customer (customerId, customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy) VALUES(@customerID, @customerName, @addressID," +
            "@active, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
             command.Parameters.AddWithValue("@customerID", _newCustomerID);
@@ -166,10 +241,13 @@ namespace wgu_software_2
             command.Parameters.AddWithValue("@lastUpdate", lastUpdate);
             command.Parameters.AddWithValue("@lastUpdateBy", updateUser);
 
+           // command2.CommandText = "INSERT INTO customer (addressId, createDate, createdBy, lastUpdate, lastUpdateBy)" +
+           //     "SELECT (addressId, createDate, createdBy, lastUpdate, lastUpdateBy) FROM address WHERE addressId = @addID";
+           // command2.Parameters.AddWithValue("@addID", _newAddressID);
 
-
+            //command2.ExecuteNonQuery();
             command.ExecuteNonQuery();
-      
+            //need to add the address first, return the ID and store it to link to
 
         }
 
@@ -188,7 +266,7 @@ namespace wgu_software_2
             }
             reader.Close();
 
-            MessageBox.Show(id.ToString());
+   
             return id + 1;
         }
 
@@ -219,7 +297,7 @@ namespace wgu_software_2
 
             reader.Close();
 
-           // MessageBox.Show(_newCustomerID.ToString(), "Before the increment");
+ 
 
             return id + 1;
         }
@@ -243,34 +321,6 @@ namespace wgu_software_2
             {
                 _activeCustomer = false;
             }
-        }
-
-        private void countryComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch(countryComboBox.SelectedIndex)
-            {
-                case 0:
-                    //Make sure only US cities are available to select
-                    cityComboBox.Items.Clear();
-                    cityComboBox.Items.Add(_cityList[0]);
-                    cityComboBox.Items.Add(_cityList[1]);
-                    
-                    break;
-                case 1:
-                    cityComboBox.Items.Clear();
-                    cityComboBox.Items.Add(_cityList[2]);
-                    cityComboBox.Items.Add(_cityList[3]);
-                    break;
-                case 2:
-                    cityComboBox.Items.Clear();
-                    cityComboBox.Items.Add(_cityList[4]);
-                    break;
-            }
-        }
-
-        private void cityComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -62,6 +62,8 @@ namespace wgu_software_2
             this.appointmentDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.appointmentDataGridView.Location = new System.Drawing.Point(282, 56);
             this.appointmentDataGridView.Name = "appointmentDataGridView";
+            this.appointmentDataGridView.ReadOnly = true;
+            this.appointmentDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.appointmentDataGridView.Size = new System.Drawing.Size(438, 283);
             this.appointmentDataGridView.TabIndex = 1;
             // 
@@ -148,6 +150,7 @@ namespace wgu_software_2
             this.updateCustomerButton.TabIndex = 3;
             this.updateCustomerButton.Text = "Update Customer";
             this.updateCustomerButton.UseVisualStyleBackColor = true;
+            this.updateCustomerButton.Click += new System.EventHandler(this.updateCustomerButton_Click);
             // 
             // deleteCustomerButton
             // 
@@ -172,7 +175,10 @@ namespace wgu_software_2
             // 
             this.customerGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.customerGridView.Location = new System.Drawing.Point(51, 32);
+            this.customerGridView.MultiSelect = false;
             this.customerGridView.Name = "customerGridView";
+            this.customerGridView.ReadOnly = true;
+            this.customerGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.customerGridView.Size = new System.Drawing.Size(666, 295);
             this.customerGridView.TabIndex = 0;
             this.customerGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.customerGridView_CellContentClick);

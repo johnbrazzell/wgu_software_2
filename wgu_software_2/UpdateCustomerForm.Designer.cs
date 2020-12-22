@@ -1,6 +1,6 @@
 ﻿namespace wgu_software_2
 {
-    partial class AddCustomerForm
+    partial class UpdateCustomerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -182,7 +182,6 @@
             this.countryComboBox.Name = "countryComboBox";
             this.countryComboBox.Size = new System.Drawing.Size(121, 28);
             this.countryComboBox.TabIndex = 13;
-            this.countryComboBox.SelectedIndexChanged += new System.EventHandler(this.countryComboBox_SelectedIndexChanged);
             // 
             // cityComboBox
             // 
@@ -199,7 +198,6 @@
             this.cityComboBox.Name = "cityComboBox";
             this.cityComboBox.Size = new System.Drawing.Size(121, 28);
             this.cityComboBox.TabIndex = 14;
-            this.cityComboBox.SelectedIndexChanged += new System.EventHandler(this.cityComboBox_SelectedIndexChanged);
             // 
             // yesRadioButton
             // 
@@ -249,7 +247,7 @@
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
-            // AddCustomerForm
+            // UpdateCustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -273,8 +271,8 @@
             this.Controls.Add(this.address2Label);
             this.Controls.Add(this.addressLabel);
             this.Controls.Add(this.nameLabel);
-            this.Name = "AddCustomerForm";
-            this.Text = "Add Customer";
+            this.Name = "UpdateCustomerForm";
+            this.Text = "Update Customer";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -290,6 +288,10 @@
         private System.Windows.Forms.Label activeCustomerLabel;
         private System.Windows.Forms.Label countryLabel;
         private System.Windows.Forms.Label cityLabel;
+        private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Button cancelButton;
+        public System.Windows.Forms.RadioButton yesRadioButton;
+        public System.Windows.Forms.RadioButton noRadioButton;
         private System.Windows.Forms.TextBox nameTextBox;
         private System.Windows.Forms.TextBox addressTextBox;
         private System.Windows.Forms.TextBox address2TextBox;
@@ -297,9 +299,5 @@
         private System.Windows.Forms.TextBox phoneTextBox;
         private System.Windows.Forms.ComboBox countryComboBox;
         private System.Windows.Forms.ComboBox cityComboBox;
-        private System.Windows.Forms.RadioButton yesRadioButton;
-        private System.Windows.Forms.RadioButton noRadioButton;
-        private System.Windows.Forms.Button saveButton;
-        private System.Windows.Forms.Button cancelButton;
     }
 }

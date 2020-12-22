@@ -17,7 +17,8 @@ namespace wgu_software_2
 
         MySqlDataAdapter _adapter;
         MySqlConnection _connection;
-        DataSet data = new DataSet();
+        DataSet _appointmentDataSet = new DataSet();
+        DataSet _customerDataSet = new DataSet();
         public AppointmentForm()
         {
             InitializeComponent();
@@ -26,11 +27,28 @@ namespace wgu_software_2
             
             _connection = DBHelper.GetConnection();
 
-            _adapter = new MySqlDataAdapter("SELECT * FROM appointment ", _connection);
-            _adapter.Fill(data);
-            this.appointmentDataGridView.DataSource = data.Tables[0];
-
+            PopulateDataGridViews();
            // MySqlDataReader reader = DBHelper.ExecuteQuery("test");
+        }
+
+        public void UpdateCustomerForm()
+        {
+            customerGridView.Update();
+            customerGridView.Refresh();
+            PopulateDataGridViews();
+        }
+
+        private void PopulateDataGridViews()
+        {
+            _adapter = new MySqlDataAdapter("SELECT * FROM appointment", _connection);
+            _adapter.Fill(_appointmentDataSet);
+            this.appointmentDataGridView.DataSource = _appointmentDataSet.Tables[0];
+           
+            _adapter = new MySqlDataAdapter("SELECT * FROM customer", _connection);
+            _adapter.Fill(_customerDataSet);
+            this.customerGridView.DataSource = _customerDataSet.Tables[0];
+
+
         }
 
         private void calendar_DateChanged(object sender, DateRangeEventArgs e)
@@ -46,7 +64,7 @@ namespace wgu_software_2
 
         private void customerGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //need to load data into this gridview
+           
         }
 
         private void addCustomerButton_Click(object sender, EventArgs e)
@@ -58,6 +76,30 @@ namespace wgu_software_2
 
         private void addAppointmentButton_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void updateCustomerButton_Click(object sender, EventArgs e)
+        {
+
+            int customerID;
+            foreach (DataGridViewRow row in customerGridView.SelectedRows)
+            {
+
+                bool p = Int32.TryParse(row.Cells[0].Value.ToString(), out customerID);
+        
+                if(p)
+                {
+                    UpdateCustomerForm updateCustomer = new UpdateCustomerForm(customerID);
+                    updateCustomer.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Error retrieving customerID. Please contact your administrator.");
+                }
+                
+               
+            }
 
         }
     }
