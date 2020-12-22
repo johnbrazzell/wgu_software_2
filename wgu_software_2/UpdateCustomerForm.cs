@@ -38,17 +38,17 @@ namespace wgu_software_2
             command.CommandText = "SELECT * FROM customer WHERE customerId = @id";
             command.Parameters.AddWithValue("@id", id);
 
-            MySqlDataReader reader = command.ExecuteReader();
+            MySqlDataReader customerReader = command.ExecuteReader();
             bool activeCustomer;
             int addressID = 0;
             
             //read information from customer and populate form with information
-            if(reader.HasRows)
+            if(customerReader.HasRows)
             {
-                if (reader.Read())
+                if (customerReader.Read())
                 {
-                    nameTextBox.Text = reader["customerName"].ToString();
-                    bool p = Boolean.TryParse(reader["active"].ToString(), out activeCustomer);
+                    nameTextBox.Text = customerReader["customerName"].ToString();
+                    bool p = Boolean.TryParse(customerReader["active"].ToString(), out activeCustomer);
 
                     if (p)
                     {
@@ -62,39 +62,38 @@ namespace wgu_software_2
                         }
                     }
 
-                    bool n = Int32.TryParse(reader["addressId"].ToString(), out addressID);
-                    reader.Close();
+                    //bool n = Int32.TryParse(reader["addressId"].ToString(), out addressID);
+                    addressID = (int)customerReader["addressId"];
 
-                    if(n)
-                    {
-                        //do shit
-                    }
+                    MessageBox.Show("Address ID for Update: " + addressID);
+                    customerReader.Close();
+
+               
                 }
             }
 
-            reader.Close();
             
-            MessageBox.Show("Address ID: " + addressID.ToString());
+           // MessageBox.Show("Address ID: " + addressID.ToString());
             //read information from address and populate form
             command.CommandText = "SELECT * FROM address WHERE addressId = @addressID";
             command.Parameters.AddWithValue("@addressID", addressID);
+            MessageBox.Show("AddressID as parameter" + addressID);
+            MySqlDataReader addressReader = command.ExecuteReader();
 
-            command.ExecuteReader();
-
-            if(reader.HasRows)
+            if(addressReader.HasRows)
             {
-                if(reader.Read())
+                if(addressReader.Read())
                 {
-                    addressTextBox.Text = reader["address"].ToString();
-                    address2TextBox.Text = reader["address2"].ToString();
-                    postalCodeTextBox.Text = reader["postalCode"].ToString();
-                    phoneTextBox.Text = reader["phone"].ToString();
+                    addressTextBox.Text = addressReader["address"].ToString();
+                    address2TextBox.Text = addressReader["address2"].ToString();
+                    postalCodeTextBox.Text = addressReader["postalCode"].ToString();
+                    phoneTextBox.Text = addressReader["phone"].ToString();
 
                 }
 
                 
             }
-            reader.Close();
+            addressReader.Close();
 
         }
 
@@ -241,13 +240,8 @@ namespace wgu_software_2
             command.Parameters.AddWithValue("@lastUpdate", lastUpdate);
             command.Parameters.AddWithValue("@lastUpdateBy", updateUser);
 
-           // command2.CommandText = "INSERT INTO customer (addressId, createDate, createdBy, lastUpdate, lastUpdateBy)" +
-           //     "SELECT (addressId, createDate, createdBy, lastUpdate, lastUpdateBy) FROM address WHERE addressId = @addID";
-           // command2.Parameters.AddWithValue("@addID", _newAddressID);
-
-            //command2.ExecuteNonQuery();
             command.ExecuteNonQuery();
-            //need to add the address first, return the ID and store it to link to
+        
 
         }
 
