@@ -135,6 +135,7 @@ namespace wgu_software_2
             this.updateAppointmentButton.TabIndex = 5;
             this.updateAppointmentButton.Text = "Update Appointment";
             this.updateAppointmentButton.UseVisualStyleBackColor = true;
+            this.updateAppointmentButton.Click += new System.EventHandler(this.updateAppointmentButton_Click);
             // 
             // filterLabel
             // 

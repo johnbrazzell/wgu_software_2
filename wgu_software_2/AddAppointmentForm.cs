@@ -58,7 +58,7 @@ namespace wgu_software_2
             command.Parameters.AddWithValue("@type", appointmentTypeTextBox.Text.Trim());
             command.Parameters.AddWithValue("@url", "not needed");
             command.Parameters.AddWithValue("@start", startConverted);
-            command.Parameters.AddWithValue("@end", endDateAndTime);
+            command.Parameters.AddWithValue("@end", endDateConverted);
             command.Parameters.AddWithValue("@createDate", dt);
             command.Parameters.AddWithValue("@createdBy", DBHelper.GetCurrentUser());
             command.Parameters.AddWithValue("@lastUpdate", dt);

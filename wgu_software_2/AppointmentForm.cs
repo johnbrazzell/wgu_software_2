@@ -143,5 +143,25 @@ namespace wgu_software_2
         {
 
         }
+
+        private void updateAppointmentButton_Click(object sender, EventArgs e)
+        {
+            int appointmentID;
+            foreach (DataGridViewRow row in appointmentDataGridView.SelectedRows)
+            {
+
+                bool p = Int32.TryParse(row.Cells[0].Value.ToString(), out appointmentID);
+
+                if (p)
+                {
+                    UpdateAppointmentForm updateAppointmentForm = new UpdateAppointmentForm(appointmentID);
+                    updateAppointmentForm.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Error retrieving appointmentID. Please contact your administrator.");
+                }
+            }
+        }
     }
 }
