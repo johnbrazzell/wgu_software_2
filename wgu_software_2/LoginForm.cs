@@ -56,6 +56,8 @@ namespace wgu_software_2
             bool loginSuccess = DBHelper.VerifyLogin(usernameTextBox.Text, passwordTextBox.Text);
             if(loginSuccess)
             {
+                //Set the _currentUser in DBhelper
+                DBHelper.SetCurrentUser(usernameTextBox.Text.Trim());
                 MessageBox.Show("Login Successful!");
                 //if login is successful then stamp time with user information
                 LoginStamp(_docPath, usernameTextBox.Text);

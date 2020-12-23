@@ -19,11 +19,22 @@ namespace wgu_software_2
     static class DBHelper
     {
         private static MySqlConnection _connection;
-
+        private static string _currentUser;
+        
         
         public static MySqlConnection GetConnection()
         {
             return _connection;
+        }
+
+
+        public static void SetCurrentUser(string userName)
+        {
+            _currentUser = userName;
+        }
+        public static string GetCurrentUser()
+        {
+            return _currentUser;
         }
         static public void OpenConnection()
         {
@@ -123,6 +134,7 @@ namespace wgu_software_2
 
             if (loginReader.HasRows)
             {
+                
                 loginReader.Close();
                 return true;
             }
@@ -131,22 +143,7 @@ namespace wgu_software_2
                 loginReader.Close();
                 return false;
             }
-            //while (loginReader.Read()) //need to check username and password
-            //{
-            //    if(loginReader["userName"].ToString() == userName)
-            //    {
-            //        if(loginReader["password"].ToString() ==  password)
-            //        {
-            //            MessageBox.Show("Login successful");
-            //            break;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("Username or password is incorrect.");
-            //    }
-               
-            //}
+     
 
         }
     }

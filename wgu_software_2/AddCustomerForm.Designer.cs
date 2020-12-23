@@ -232,7 +232,7 @@
             this.saveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.saveButton.Location = new System.Drawing.Point(173, 330);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(122, 32);
+            this.saveButton.Size = new System.Drawing.Size(120, 30);
             this.saveButton.TabIndex = 17;
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = true;
@@ -243,7 +243,7 @@
             this.cancelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cancelButton.Location = new System.Drawing.Point(328, 330);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(122, 32);
+            this.cancelButton.Size = new System.Drawing.Size(120, 30);
             this.cancelButton.TabIndex = 18;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;

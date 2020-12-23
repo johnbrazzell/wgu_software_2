@@ -46,7 +46,7 @@ namespace wgu_software_2
             _customerDataSet = null;
             _customerDataSet = new DataSet();
 
-            _adapter = new MySqlDataAdapter("SELECT * FROM appointment", _connection);
+            _adapter = new MySqlDataAdapter("SELECT appointmentId, customerId, type, start, end FROM appointment", _connection);
             _adapter.Fill(_appointmentDataSet);
             this.appointmentDataGridView.DataSource = _appointmentDataSet.Tables[0];
            
@@ -136,6 +136,11 @@ namespace wgu_software_2
                     UpdateCustomerForm();
                 }
             }
+
+        }
+
+        private void appointmentDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
         }
     }

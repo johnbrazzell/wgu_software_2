@@ -192,6 +192,9 @@ namespace wgu_software_2
             return id + 1;
         }
 
+
+        
+
         private int GetNewCustomerID()
         {
             //access the customer table

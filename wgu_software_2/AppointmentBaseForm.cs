@@ -22,10 +22,12 @@ namespace wgu_software_2
             InitializeComponent();
 
             //Set start and end time picker to only show times
-            appointmentTimeStartPicker.Format = DateTimePickerFormat.Time;
+            appointmentTimeStartPicker.Format = DateTimePickerFormat.Custom;
+            appointmentTimeStartPicker.CustomFormat = "hh:mm tt";
             appointmentTimeStartPicker.ShowUpDown = true;
-            appointimeTimeEndPicker.Format = DateTimePickerFormat.Time;
+            appointimeTimeEndPicker.Format = DateTimePickerFormat.Custom;
             appointimeTimeEndPicker.ShowUpDown = true;
+            appointimeTimeEndPicker.CustomFormat = "hh:mm tt";
 
             //need to load customer data into datagridview
             PopulateCustomerGrid();
@@ -44,6 +46,16 @@ namespace wgu_software_2
             _adapter = new MySqlDataAdapter("SELECT customerId, customerName, active FROM customer", _connection);
             _adapter.Fill(_customerDataSet);
             this.customerDataGridView.DataSource = _customerDataSet.Tables[0];
+
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
 
         }
     }

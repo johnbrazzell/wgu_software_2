@@ -15,7 +15,6 @@ C:\Users\jbraz\source\repos\wgu_software_2\wgu_software_2\bin\Debug\K4os.Hash.xx
 C:\Users\jbraz\source\repos\wgu_software_2\wgu_software_2\bin\Debug\System.Numerics.Vectors.dll
 C:\Users\jbraz\source\repos\wgu_software_2\wgu_software_2\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
 C:\Users\jbraz\source\repos\wgu_software_2\wgu_software_2\bin\Debug\MySql.Data.xml
-C:\Users\jbraz\source\repos\wgu_software_2\wgu_software_2\obj\Debug\wgu_software_2.csprojAssemblyReference.cache
 C:\Users\jbraz\source\repos\wgu_software_2\wgu_software_2\obj\Debug\wgu_software_2.exe.config
 C:\Users\jbraz\source\repos\wgu_software_2\wgu_software_2\obj\Debug\wgu_software_2.Properties.Resources.resources
 C:\Users\jbraz\source\repos\wgu_software_2\wgu_software_2\obj\Debug\wgu_software_2.csproj.GenerateResource.cache
@@ -56,3 +55,4 @@ C:\Users\jbraz\source\repos\wgu_software_2\wgu_software_2\obj\Debug\wgu_software
 C:\Users\jbraz\source\repos\wgu_software_2\wgu_software_2\obj\Debug\wgu_software_2.UpdateCustomerForm.resources
 C:\Users\jbraz\source\repos\wgu_software_2\wgu_software_2\obj\Debug\wgu_software_2.AppointmentBaseForm.resources
 C:\Users\jbraz\source\repos\wgu_software_2\wgu_software_2\obj\Debug\wgu_software_2.AddAppointmentForm.resources
+C:\Users\jbraz\source\repos\wgu_software_2\wgu_software_2\obj\Debug\wgu_software_2.csprojAssemblyReference.cache

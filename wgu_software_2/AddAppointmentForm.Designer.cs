@@ -31,10 +31,14 @@ namespace wgu_software_2
         {
             this.SuspendLayout();
             // 
+            // saveButton
+            // 
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click_1);
+            // 
             // AddAppointmentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(903, 468);
+            this.ClientSize = new System.Drawing.Size(675, 468);
             this.Name = "AddAppointmentForm";
             this.Text = "Add Appointment";
             this.ResumeLayout(false);
