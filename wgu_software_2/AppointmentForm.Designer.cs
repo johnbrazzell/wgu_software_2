@@ -67,6 +67,7 @@ namespace wgu_software_2
             this.appointmentDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.appointmentDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.appointmentDataGridView.Location = new System.Drawing.Point(369, 32);
+            this.appointmentDataGridView.MultiSelect = false;
             this.appointmentDataGridView.Name = "appointmentDataGridView";
             this.appointmentDataGridView.ReadOnly = true;
             this.appointmentDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -125,6 +126,7 @@ namespace wgu_software_2
             this.deleteAppointmentButton.TabIndex = 6;
             this.deleteAppointmentButton.Text = "Delete Appointment";
             this.deleteAppointmentButton.UseVisualStyleBackColor = true;
+            this.deleteAppointmentButton.Click += new System.EventHandler(this.deleteAppointmentButton_Click);
             // 
             // updateAppointmentButton
             // 
@@ -224,6 +226,7 @@ namespace wgu_software_2
             this.Controls.Add(this.appointmentScheduleTabs);
             this.Name = "AppointmentForm";
             this.Text = "Appointment Scheduler - Main Screen";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnFormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.appointmentDataGridView)).EndInit();
             this.appointmentScheduleTabs.ResumeLayout(false);
             this.appointmentTabView.ResumeLayout(false);

@@ -46,7 +46,7 @@ namespace wgu_software_2
             _adapter = new MySqlDataAdapter("SELECT customerId, customerName, active FROM customer", _connection);
             _adapter.Fill(_customerDataSet);
             this.customerDataGridView.DataSource = _customerDataSet.Tables[0];
-
+            //_customerDataSet.AsEnumerable.where
         }
 
         private void cancelButton_Click(object sender, EventArgs e)

@@ -31,11 +31,15 @@ namespace wgu_software_2
         {
             this.SuspendLayout();
             // 
-            // UpdateAppointment
+            // saveButton
+            // 
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
+            // UpdateAppointmentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(675, 468);
-            this.Name = "UpdateAppointment";
+            this.Name = "UpdateAppointmentForm";
             this.Text = "Update Appointment";
             this.ResumeLayout(false);
             this.PerformLayout();

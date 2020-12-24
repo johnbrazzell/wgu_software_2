@@ -65,7 +65,7 @@ namespace wgu_software_2
         private void appointmentFilterComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             
-            //use this function to change the filter method
+      
         }
 
         private void customerGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -147,14 +147,16 @@ namespace wgu_software_2
         private void updateAppointmentButton_Click(object sender, EventArgs e)
         {
             int appointmentID;
+            int customerID;
             foreach (DataGridViewRow row in appointmentDataGridView.SelectedRows)
             {
 
                 bool p = Int32.TryParse(row.Cells[0].Value.ToString(), out appointmentID);
-
-                if (p)
+                bool q = Int32.TryParse(row.Cells[1].Value.ToString(), out customerID);
+                 
+                if (p && q)
                 {
-                    UpdateAppointmentForm updateAppointmentForm = new UpdateAppointmentForm(appointmentID);
+                    UpdateAppointmentForm updateAppointmentForm = new UpdateAppointmentForm(appointmentID, customerID);
                     updateAppointmentForm.Show();
                 }
                 else
@@ -162,6 +164,40 @@ namespace wgu_software_2
                     MessageBox.Show("Error retrieving appointmentID. Please contact your administrator.");
                 }
             }
+        }
+
+        private void deleteAppointmentButton_Click(object sender, EventArgs e)
+        {
+
+            int appointmentID;
+
+            foreach (DataGridViewRow row in appointmentDataGridView.SelectedRows)
+            {
+                bool p = Int32.TryParse(row.Cells[0].Value.ToString(), out appointmentID);
+                
+
+                if (p)
+                {
+
+                    DBHelper.OpenConnection();
+                    MySqlCommand command = _connection.CreateCommand();
+                    command.CommandText = "DELETE appointment FROM appointment WHERE appointmentId=@appointmentID";
+                    command.Parameters.AddWithValue("@appointmentID", appointmentID);
+                  
+                    command.ExecuteNonQuery();
+
+                    UpdateCustomerForm();
+                }
+            }
+        }
+
+        private void OnFormClosed(object sender, FormClosedEventArgs e)
+        {
+            DBHelper.CloseConnection();
+
+            Application.Exit();
+        
+
         }
     }
 }

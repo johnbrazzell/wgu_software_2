@@ -136,18 +136,13 @@ namespace wgu_software_2
                 }
             }
 
-        //this.countryComboBox.SelectedIndexChanged +=
-        //new System.EventHandler(countryComboBox_SelectedIndexChanged);
 
-
-            //need to get the cityId and then load the country based on what city it is
-            //or get the cityId, then CountryId,
 
 
         }
 
 
-        //Need function to add the address first and return the address ID to add to customer record
+        
 
         private void saveButton_Click(object sender, EventArgs e)
         {
@@ -163,7 +158,7 @@ namespace wgu_software_2
             {
                 MessageBox.Show("Unable to format parse date string");
             }
-           // MessageBox.Show(str);
+       
             UpdateAddress(dt);
             UpdateCustomer(dt);
 
@@ -177,11 +172,8 @@ namespace wgu_software_2
         {
 
             DBHelper.OpenConnection();
-           // _newAddressID = GetNewAddressID();
-           // _newCustomerID = GetNewCustomerID();
-
             _connection = DBHelper.GetConnection();
-            //MySqlConnection connection = DBHelper.GetConnection();
+ 
             MySqlCommand command = _connection.CreateCommand();
 
           
@@ -210,18 +202,7 @@ namespace wgu_software_2
                     break;
 
             }
-            //Address DB Fields
-            //addressId
-            //address2
-            //cityId
-            //postalCode
-            //phone
-            //createDate
-            //createdBy
-            //lastUpdate
-            //lastUpdateBy
-            //command.CommandText = "INSERT INTO address (addressId, address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy)" +
-            //    "VALUES (@addressID, @address, @address2, @cityID, @postalCode, @phone, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
+            
             command.CommandText = "UPDATE address SET address=@address, address2=@address2, cityId=@cityID, postalCode=@postalCode," +
                 "phone=@phone, lastUpdate=@lastUpdate, lastUpdateBy=@lastUpdateBy WHERE addressId=@addressID";
             command.Parameters.AddWithValue("@addressID", _addressID);
@@ -232,24 +213,9 @@ namespace wgu_software_2
             command.Parameters.AddWithValue("@phone", phoneTextBox.Text.Trim());
             command.Parameters.AddWithValue("@lastUpdateBy", "test");
             command.Parameters.AddWithValue("@lastUpdate", date);
-            //Fields to add from form
-            //Name 
-            //Address 1
-            //Address 2
-            //Postal Code
-            //Phone
-            //Active Customer - selectable by radio button
-            //Country - selectable in drop down
-            //City - selectable in drop down
-            //get the data in the text fields
-            //create a new record in the customer database
-            //add information into customer database
-            //create new record in address database
-            //INSERT INTO 'table name' (column1, column2, ...)
-            //VALUES (value1, value2, ...)
+    
             command.ExecuteNonQuery();
-            
-            //command.Parameters.AddWithValue("@password", password);
+         
         }
 
         private void UpdateCustomer(DateTime date)
@@ -258,10 +224,8 @@ namespace wgu_software_2
 
             MySqlCommand command = _connection.CreateCommand();
 
-            //loginCheckCommand.CommandText = "SELECT * FROM user WHERE userName=@username AND password=@password";
-            //loginCheckCommand.Parameters.AddWithValue("@username", userName);
-            //loginCheckCommand.Parameters.AddWithValue("@password", password);
-            //command.CommandText = "SELECT addressId, createDate, createdBy, lastUpdate, lastUpdateBy FROM address WHERE addressId = @id";
+
+
             command.CommandText = "UPDATE customer SET customerName=@customerName, active=@active, lastUpdate=@lastUpdate, lastUpdateBy=@lastUpdateBy " +
                 "WHERE customerId=@customerID";
             command.Parameters.AddWithValue("@customerID", _customerID);
@@ -282,34 +246,7 @@ namespace wgu_software_2
             command.Parameters.AddWithValue("@lastUpdateBy", "test");
             command.Parameters.AddWithValue("@lastUpdate", date);
 
-            //MySqlDataReader reader = command.ExecuteReader();
-
-
-            //    if (reader.Read())
-            //    {
-            //        bool p = Int32.TryParse(reader["addressId"].ToString(), out addressID);
-            //        createDate = (DateTime)reader["createDate"];
-            //        createUser = reader["createdBy"].ToString();
-            //        lastUpdate = (DateTime)reader["lastUpdate"];
-            //        updateUser = reader["lastUpdateBy"].ToString();
-            //    }
-
-
-            //   reader.Close();
-
-            //MySqlDataReader loginReader = loginCheckCommand.ExecuteReader();
-
-            // //MySqlCommand command2 = _connection.CreateCommand();
-            // command.CommandText = "INSERT INTO customer (customerId, customerName, addressId, active, createDate, createdBy, lastUpdate, lastUpdateBy) VALUES(@customerID, @customerName, @addressID," +
-            //"@active, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
-            // command.Parameters.AddWithValue("@customerID", _customerID);
-            // command.Parameters.AddWithValue("@customerName", nameTextBox.Text);
-            // command.Parameters.AddWithValue("@addressID", _newAddressID);
-            // command.Parameters.AddWithValue("@active", _activeCustomer);
-            // command.Parameters.AddWithValue("@createDate", createDate);
-            // command.Parameters.AddWithValue("@createdBy", createUser);
-            // command.Parameters.AddWithValue("@lastUpdate", lastUpdate);
-            // command.Parameters.AddWithValue("@lastUpdateBy", updateUser);
+            
 
             command.ExecuteNonQuery();
         

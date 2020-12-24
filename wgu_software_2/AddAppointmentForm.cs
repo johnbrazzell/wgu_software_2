@@ -16,9 +16,11 @@ namespace wgu_software_2
     {
         int _customerID;
         int _userID;
+        AppointmentForm _appointmentForm;
         public AddAppointmentForm()
         {
             InitializeComponent();
+            _appointmentForm = Application.OpenForms["AppointmentForm"] as AppointmentForm;
         }
 
     
@@ -67,7 +69,7 @@ namespace wgu_software_2
             command.ExecuteNonQuery();
 
             base.PopulateCustomerGrid();
-
+            _appointmentForm.UpdateCustomerForm();
             this.Close();
             // MessageBox.Show("This is from the child Add Appointment form");
         }
@@ -103,16 +105,13 @@ namespace wgu_software_2
             foreach (DataGridViewRow row in customerDataGridView.Rows)
             {
 
-                bool p = Int32.TryParse(row.Cells[0].Value.ToString(), out _customerID);
+                if(row.Selected)
+                {
+                    _customerID = Int32.Parse(row.Cells[0].Value.ToString()); 
+                }
 
-                if(p)
-                {
-                    return; 
-                }
-                else
-                {
-                    MessageBox.Show("Error retrieving customerID from datagridview.");
-                }
+                
+           
             }
         }
 
