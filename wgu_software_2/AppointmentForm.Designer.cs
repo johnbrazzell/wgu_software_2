@@ -52,7 +52,7 @@ namespace wgu_software_2
             // 
             // calendar
             // 
-            this.calendar.FirstDayOfWeek = System.Windows.Forms.Day.Sunday;
+            this.calendar.FirstDayOfWeek = System.Windows.Forms.Day.Monday;
             this.calendar.Location = new System.Drawing.Point(50, 106);
             this.calendar.MaxSelectionCount = 1;
             this.calendar.Name = "calendar";

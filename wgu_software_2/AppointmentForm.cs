@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using System.Globalization;
 
 namespace wgu_software_2
 {
@@ -27,18 +28,41 @@ namespace wgu_software_2
             
             _connection = DBHelper.GetConnection();
 
-            
+            //set the appointment filter to month
+            appointmentFilterComboBox.SelectedIndex = 0;
+
+            //CultureInfo cultureInfo = new CultureInfo("en-US");
+            //calendar = cultureInfo.Calendar;
             UpdateCustomerForm();
            // MySqlDataReader reader = DBHelper.ExecuteQuery("test");
         }
 
         public void UpdateCustomerForm()
         {
+            _customerDataSet = null;
+            _customerDataSet = new DataSet();
+
+            _adapter = new MySqlDataAdapter("SELECT * FROM customer", _connection);
+            _adapter.Fill(_customerDataSet);
+            this.customerGridView.DataSource = _customerDataSet.Tables[0];
+
             customerGridView.Refresh();
             customerGridView.Update();
             PopulateDataGridViews();
         }
 
+        public void UpdateAppointmentForm()
+        {
+            _appointmentDataSet = null;
+            _appointmentDataSet = new DataSet();
+           
+
+            _adapter = new MySqlDataAdapter("SELECT appointmentId, customerId, type, start, end FROM appointment", _connection);
+            _adapter.Fill(_appointmentDataSet);
+            this.appointmentDataGridView.DataSource = _appointmentDataSet.Tables[0];
+        }
+
+        //Need to separate from gridviews so I can filter the 
         private void PopulateDataGridViews()
         {
             _appointmentDataSet = null;
@@ -59,7 +83,61 @@ namespace wgu_software_2
 
         private void calendar_DateChanged(object sender, DateRangeEventArgs e)
         {
+            //if the selection date has changed, check the filter combobox 
+            //and change the list of the appointment grid view 
+            DateTime dt = new DateTime();
 
+            if (appointmentFilterComboBox.Text == "Month")
+            {
+                //get the month, and populate all the appointments in the month.
+                DateTime d = calendar.SelectionRange.Start;
+                //Console.WriteLine(d.Month.ToString());
+                MessageBox.Show(d.Month.ToString());
+                List<DateTime> dtList = new List<DateTime>();
+
+                MySqlCommand command = _connection.CreateCommand();
+
+                command.CommandText = "SELECT start FROM appointment";
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                while(reader.Read())
+                {
+                    dtList.Add((DateTime)reader["start"]);
+                }
+
+                reader.Close();
+
+                List<DateTime> allAppointments = dtList.FindAll(x => x.Month.Equals(d.Month) && x.Year.Equals(d.Year));
+                command.CommandText = "SELECT "
+
+                foreach(DateTime dateTime in allAppointments)
+                {
+                    if(dateTime.Month == d.Month && dateTime.Year == d.Year)
+                        MessageBox.Show(dateTime.ToString());
+
+                }
+                //_appointmentDataSet = null;
+                //_appointmentDataSet = new DataSet();
+
+
+               // _adapter = new MySqlDataAdapter("SELECT appointmentId, customerId, type, start, end FROM appointment WHERE start=@startMonth", _connection);
+                
+               // _adapter.Fill(_appointmentDataSet);
+               // this.appointmentDataGridView.DataSource = _appointmentDataSet.Tables[0];
+                //if ()
+
+                //calendar.getwee
+               // dt = calendar.
+            }
+
+            if(appointmentFilterComboBox.Text == "Week")
+            {
+                //add week filter here
+            }
+
+            //int week = (int)calendar.SelectionStart.DayOfWeek;
+            //MessageBox.Show("Selected week: " + week.ToString());
         }
 
         private void appointmentFilterComboBox_SelectedIndexChanged(object sender, EventArgs e)
