@@ -107,6 +107,7 @@ namespace wgu_software_2
             command.ExecuteNonQuery();
 
             _appointmentForm.UpdateCustomerForm();
+            _appointmentForm.UpdateAppointmentsByMonth();
             
             this.Close();
         }

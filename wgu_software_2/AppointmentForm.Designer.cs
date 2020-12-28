@@ -52,11 +52,10 @@ namespace wgu_software_2
             // 
             // calendar
             // 
-            this.calendar.FirstDayOfWeek = System.Windows.Forms.Day.Monday;
+            this.calendar.FirstDayOfWeek = System.Windows.Forms.Day.Sunday;
             this.calendar.Location = new System.Drawing.Point(50, 106);
             this.calendar.MaxSelectionCount = 1;
             this.calendar.Name = "calendar";
-            this.calendar.ShowWeekNumbers = true;
             this.calendar.TabIndex = 0;
             this.calendar.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.calendar_DateChanged);
             // 
@@ -70,6 +69,7 @@ namespace wgu_software_2
             this.appointmentDataGridView.MultiSelect = false;
             this.appointmentDataGridView.Name = "appointmentDataGridView";
             this.appointmentDataGridView.ReadOnly = true;
+            this.appointmentDataGridView.RowTemplate.ReadOnly = true;
             this.appointmentDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.appointmentDataGridView.Size = new System.Drawing.Size(519, 262);
             this.appointmentDataGridView.TabIndex = 1;

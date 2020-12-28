@@ -31,9 +31,12 @@ namespace wgu_software_2
             //set the appointment filter to month
             appointmentFilterComboBox.SelectedIndex = 0;
 
+            UpdateAppointmentsByMonth();
+
             //CultureInfo cultureInfo = new CultureInfo("en-US");
             //calendar = cultureInfo.Calendar;
             UpdateCustomerForm();
+            
            // MySqlDataReader reader = DBHelper.ExecuteQuery("test");
         }
 
@@ -48,31 +51,31 @@ namespace wgu_software_2
 
             customerGridView.Refresh();
             customerGridView.Update();
-            PopulateDataGridViews();
+            PopulateCustomerGridView();
         }
 
         public void UpdateAppointmentForm()
         {
-            _appointmentDataSet = null;
-            _appointmentDataSet = new DataSet();
+            //_appointmentDataSet = null;
+            //_appointmentDataSet = new DataSet();
            
 
-            _adapter = new MySqlDataAdapter("SELECT appointmentId, customerId, type, start, end FROM appointment", _connection);
-            _adapter.Fill(_appointmentDataSet);
-            this.appointmentDataGridView.DataSource = _appointmentDataSet.Tables[0];
+            //_adapter = new MySqlDataAdapter("SELECT appointmentId, customerId, type, start, end FROM appointment", _connection);
+            //_adapter.Fill(_appointmentDataSet);
+            //this.appointmentDataGridView.DataSource = _appointmentDataSet.Tables[0];
         }
 
-        //Need to separate from gridviews so I can filter the 
-        private void PopulateDataGridViews()
+
+        private void PopulateCustomerGridView()
         {
-            _appointmentDataSet = null;
-            _appointmentDataSet = new DataSet();
+           // _appointmentDataSet = null;
+           // _appointmentDataSet = new DataSet();
             _customerDataSet = null;
             _customerDataSet = new DataSet();
 
-            _adapter = new MySqlDataAdapter("SELECT appointmentId, customerId, type, start, end FROM appointment", _connection);
-            _adapter.Fill(_appointmentDataSet);
-            this.appointmentDataGridView.DataSource = _appointmentDataSet.Tables[0];
+            //_adapter = new MySqlDataAdapter("SELECT appointmentId, customerId, type, start, end FROM appointment", _connection);
+            //_adapter.Fill(_appointmentDataSet);
+            //this.appointmentDataGridView.DataSource = _appointmentDataSet.Tables[0];
            
             _adapter = new MySqlDataAdapter("SELECT * FROM customer", _connection);
             _adapter.Fill(_customerDataSet);
@@ -83,67 +86,39 @@ namespace wgu_software_2
 
         private void calendar_DateChanged(object sender, DateRangeEventArgs e)
         {
+            calendar.BoldedDates = null;
             //if the selection date has changed, check the filter combobox 
             //and change the list of the appointment grid view 
-            DateTime dt = new DateTime();
-
-            if (appointmentFilterComboBox.Text == "Month")
+           // DateTime dt = new DateTime();
+            if(appointmentFilterComboBox.Text == "Month")
             {
-                //get the month, and populate all the appointments in the month.
-                DateTime d = calendar.SelectionRange.Start;
-                //Console.WriteLine(d.Month.ToString());
-                MessageBox.Show(d.Month.ToString());
-                List<DateTime> dtList = new List<DateTime>();
-
-                MySqlCommand command = _connection.CreateCommand();
-
-                command.CommandText = "SELECT start FROM appointment";
-
-                MySqlDataReader reader = command.ExecuteReader();
-
-                while(reader.Read())
-                {
-                    dtList.Add((DateTime)reader["start"]);
-                }
-
-                reader.Close();
-
-                List<DateTime> allAppointments = dtList.FindAll(x => x.Month.Equals(d.Month) && x.Year.Equals(d.Year));
-                command.CommandText = "SELECT "
-
-                foreach(DateTime dateTime in allAppointments)
-                {
-                    if(dateTime.Month == d.Month && dateTime.Year == d.Year)
-                        MessageBox.Show(dateTime.ToString());
-
-                }
-                //_appointmentDataSet = null;
-                //_appointmentDataSet = new DataSet();
-
-
-               // _adapter = new MySqlDataAdapter("SELECT appointmentId, customerId, type, start, end FROM appointment WHERE start=@startMonth", _connection);
-                
-               // _adapter.Fill(_appointmentDataSet);
-               // this.appointmentDataGridView.DataSource = _appointmentDataSet.Tables[0];
-                //if ()
-
-                //calendar.getwee
-               // dt = calendar.
+                UpdateAppointmentsByMonth();
             }
 
             if(appointmentFilterComboBox.Text == "Week")
             {
-                //add week filter here
+
+                UpdateAppointmentsByWeek();
+
+
             }
 
-            //int week = (int)calendar.SelectionStart.DayOfWeek;
-            //MessageBox.Show("Selected week: " + week.ToString());
+
         }
 
         private void appointmentFilterComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            calendar.BoldedDates = null;
       
+            if(appointmentFilterComboBox.Text == "Month")
+            {
+                UpdateAppointmentsByMonth();
+            }
+
+            if(appointmentFilterComboBox.Text == "Week")
+            {
+                UpdateAppointmentsByWeek();
+            }
         }
 
         private void customerGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -265,6 +240,7 @@ namespace wgu_software_2
                     command.ExecuteNonQuery();
 
                     UpdateCustomerForm();
+                    UpdateAppointmentsByMonth();
                 }
             }
         }
@@ -275,6 +251,159 @@ namespace wgu_software_2
 
             Application.Exit();
         
+
+        }
+
+        public void UpdateAppointmentsByMonth()
+        {
+
+            DBHelper.OpenConnection();
+            _connection = DBHelper.GetConnection();
+
+            DateTime d = calendar.SelectionRange.Start;
+
+            List<DateTime> dtList = new List<DateTime>();
+
+            MySqlCommand command = _connection.CreateCommand();
+
+            command.CommandText = "SELECT start FROM appointment";
+
+            MySqlDataReader reader = command.ExecuteReader();
+
+                
+
+            while (reader.Read())
+            {
+                dtList.Add((DateTime)reader["start"]);
+            }
+
+            reader.Close();
+
+            List<DateTime> allAppointments = dtList.FindAll(x => x.Month.Equals(d.Month) && x.Year.Equals(d.Year));
+
+            //_appointmentDataSet.Clear();
+
+            if (allAppointments.Count == 0)
+            {
+                this.appointmentDataGridView.DataSource = null;
+                return;
+            }
+            else
+            {
+             
+                this.appointmentDataGridView.DataSource = null;
+                this.appointmentDataGridView.Rows.Clear();
+
+           
+
+                _appointmentDataSet = null;
+                _appointmentDataSet = new DataSet();
+              
+                foreach (DateTime dateTime in allAppointments)
+                {
+                  
+
+                    _adapter = null;
+                    _adapter = new MySqlDataAdapter("SELECT appointmentId, customerId, type, start, end FROM appointment" +
+                        " WHERE MONTH(start)=@month AND YEAR(start)=@year", _connection);
+                    _adapter.SelectCommand.Parameters.AddWithValue("@month", d.Month);
+                    _adapter.SelectCommand.Parameters.AddWithValue("@year", d.Year);
+
+                }
+                _adapter.Fill(_appointmentDataSet);
+            }
+            if (_appointmentDataSet == null)
+            {
+                this.appointmentDataGridView.Rows.Clear();
+            }
+            else
+            {
+                this.appointmentDataGridView.Refresh();
+                this.appointmentDataGridView.Update();
+
+                this.appointmentDataGridView.DataSource = _appointmentDataSet.Tables[0];
+
+            }
+        }
+
+        public void UpdateAppointmentsByWeek()
+        {
+            //UpdateAppointmentsByWeek()
+            //add week filter here
+            //DateTime now = DateTime.Now;
+            MySqlCommand command = _connection.CreateCommand();
+
+            List<DateTime> weeklyAppointments = new List<DateTime>();
+            DateTime d = calendar.SelectionRange.Start;
+            //int day = d.Day;
+            //if selection is not sunday
+            //set day selection to sunday
+            //iterate through the days until saturday
+            //use these dates to select data
+
+            // calendar.MaxSelectionCount = 7;
+
+            //Get the users selected date, and iterate backwards to Sunday
+            while (d.DayOfWeek.ToString() != "Sunday")
+            {
+                d = d.AddDays(-1);
+                //MessageBox.Show(d.DayOfWeek.ToString());
+            }
+
+            //Now that we are at Sunday, iterate forward 
+            //Select Monday-Friday
+            //Add these dates to a list
+            while (d.DayOfWeek.ToString() != "Friday")
+            {
+                // calendar.select
+
+                //Add 1 and get to Monday
+                d = d.AddDays(1);
+                weeklyAppointments.Add(d.Date);
+            }
+
+            calendar.BoldedDates = weeklyAppointments.ToArray();
+
+            //MessageBox.Show(weeklyAppointments.Count.ToString());
+            if (weeklyAppointments.Count == 0)
+            {
+                this.appointmentDataGridView.DataSource = null;
+                return;
+
+            }
+            else
+            {
+                this.appointmentDataGridView.DataSource = null;
+                this.appointmentDataGridView.Rows.Clear();
+            }
+
+            _appointmentDataSet = null;
+            _appointmentDataSet = new DataSet();
+            _adapter = null;
+
+
+            for(int i = 0; i < weeklyAppointments.Count; i++)
+            {
+                //if(weeklyAppointments[i] == )
+                _adapter = new MySqlDataAdapter("SELECT appointmentId, customerId, type, start, end FROM appointment " +
+                    "WHERE DATE(start)=@date", _connection);
+                _adapter.SelectCommand.Parameters.AddWithValue("@date", weeklyAppointments[i]);
+                _adapter.Fill(_appointmentDataSet);
+            }
+            
+
+            if (_appointmentDataSet == null)
+            {
+                this.appointmentDataGridView.Rows.Clear();
+            }
+            else
+            {
+                this.appointmentDataGridView.Refresh();
+                this.appointmentDataGridView.Update();
+
+                this.appointmentDataGridView.DataSource = _appointmentDataSet.Tables[0];
+            }
+
 
         }
     }

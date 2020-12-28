@@ -70,6 +70,7 @@ namespace wgu_software_2
 
             base.PopulateCustomerGrid();
             _appointmentForm.UpdateCustomerForm();
+            _appointmentForm.UpdateAppointmentsByMonth();
             this.Close();
             // MessageBox.Show("This is from the child Add Appointment form");
         }
