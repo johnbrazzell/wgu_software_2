@@ -20,10 +20,11 @@ namespace wgu_software_2
         MySqlConnection _connection;
         DataSet _appointmentDataSet;
         DataSet _customerDataSet;
+        DataSet _reportDataSet;
         public AppointmentForm()
         {
             InitializeComponent();
-            appointmentFilterComboBox.SelectedIndex = 0;
+          
             DBHelper.OpenConnection();
             
             _connection = DBHelper.GetConnection();
@@ -331,7 +332,7 @@ namespace wgu_software_2
             //UpdateAppointmentsByWeek()
             //add week filter here
             //DateTime now = DateTime.Now;
-            MySqlCommand command = _connection.CreateCommand();
+            //MySqlCommand command = _connection.CreateCommand();
 
             List<DateTime> weeklyAppointments = new List<DateTime>();
             DateTime d = calendar.SelectionRange.Start;
@@ -384,7 +385,7 @@ namespace wgu_software_2
 
             for(int i = 0; i < weeklyAppointments.Count; i++)
             {
-                //if(weeklyAppointments[i] == )
+                
                 _adapter = new MySqlDataAdapter("SELECT appointmentId, customerId, type, start, end FROM appointment " +
                     "WHERE DATE(start)=@date", _connection);
                 _adapter.SelectCommand.Parameters.AddWithValue("@date", weeklyAppointments[i]);
@@ -405,6 +406,81 @@ namespace wgu_software_2
             }
 
 
+        }
+
+        private void numOfReportsByMonthButton_Click(object sender, EventArgs e)
+        {  
+
+            DBHelper.OpenConnection();
+            string reportName = "Number of Appointment Types By Month";
+            _reportDataSet = new DataSet();
+            _adapter = new MySqlDataAdapter("SELECT type AS ApptType, MONTH(start) AS Month, COUNT(type) AS Number FROM appointment GROUP BY MONTH(start), type", _connection);
+            _adapter.Fill(_reportDataSet);
+            ReportForm rf = new ReportForm(_reportDataSet, reportName);
+            rf.Show();
+            DBHelper.CloseConnection();
+        }
+
+        private void schedulesForConsultantButton_Click(object sender, EventArgs e)
+        {
+
+            // command.CommandText = "DELETE customer, address FROM customer, address WHERE customer.customerId=@customerID AND " +
+           // "address.addressId=@addressID";
+
+            //select data from Users
+            //for each user add to a list
+            //loop through the list and then select
+            //appointment info where userId exists
+
+            DBHelper.OpenConnection();
+            string reportName = "Schedules For Each Consultant";
+
+            MySqlCommand command = _connection.CreateCommand();
+
+            command.CommandText = "SELECT userId FROM user";
+
+            MySqlDataReader reader = command.ExecuteReader();
+
+            List<int> userIdList = new List<int>();
+
+            while(reader.Read())
+            {
+                userIdList.Add((int)reader["userId"]);
+
+            }
+
+            reader.Close();
+
+            _reportDataSet = new DataSet();
+            
+            for(int i = 0; i < userIdList.Count; i++)
+            {
+               
+                _adapter = new MySqlDataAdapter("SELECT user.userName, user.userId, appointment.appointmentId, appointment.customerId, appointment.type, appointment.start, appointment.end FROM user, appointment WHERE user.userId=@userID AND appointment.userId=@userID", _connection);
+                _adapter.SelectCommand.Parameters.AddWithValue("@userID", userIdList[i]);
+                _adapter.Fill(_reportDataSet); 
+
+            }
+
+
+            ReportForm rf = new ReportForm(_reportDataSet, reportName);
+            rf.Show();
+            DBHelper.CloseConnection();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            DBHelper.OpenConnection();
+            string reportName = "List of Inactive Customers";
+
+            _reportDataSet = new DataSet();
+            _adapter = new MySqlDataAdapter("SELECT customer.customerId, customer.customerName, customer.active FROM customer WHERE customer.active=@active", _connection);
+            _adapter.SelectCommand.Parameters.AddWithValue("@active", false);
+            _adapter.Fill(_reportDataSet);
+
+            ReportForm rf = new ReportForm(_reportDataSet, reportName);
+            rf.Show();
+            DBHelper.CloseConnection();
         }
     }
 }
