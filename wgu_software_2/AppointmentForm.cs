@@ -482,5 +482,16 @@ namespace wgu_software_2
             rf.Show();
             DBHelper.CloseConnection();
         }
+
+        private void appointmentDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if(e.Value is DateTime)
+            {
+                var date = (DateTime)e.Value;
+                var localDate = date.ToLocalTime();
+                e.Value = localDate;
+                //e.FormattingApplied = true;
+            }
+        }
     }
 }

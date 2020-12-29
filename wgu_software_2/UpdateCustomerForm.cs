@@ -146,6 +146,12 @@ namespace wgu_software_2
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+
+            if (!ValidateCustomerForm())
+            {
+                return;
+            }
+
             DateTime dt = DateTime.UtcNow;
             string dateString = dt.ToShortDateString();
 
@@ -350,6 +356,73 @@ namespace wgu_software_2
                     cityComboBox.Items.Add(_cityList[4]);
                     break;
             }
+        }
+
+
+        private bool ValidateCustomerForm()
+        {
+            //check if forms are empty or if
+            if (String.IsNullOrEmpty(nameTextBox.Text))
+            {
+                MessageBox.Show("Name field cannot be empty.");
+                return false;
+            }
+
+            bool nameTextHasNumbers = nameTextBox.Text.Any(x => char.IsNumber(x));
+
+            if (nameTextHasNumbers)
+            {
+                MessageBox.Show("Name field cannot have numbers.");
+                return false;
+            }
+
+            if (String.IsNullOrEmpty(addressTextBox.Text))
+            {
+                MessageBox.Show("Address field cannot be empty.");
+                return false;
+            }
+
+
+            if (String.IsNullOrEmpty(postalCodeTextBox.Text))
+            {
+                MessageBox.Show("Postal code field cannot be empty.");
+                return false;
+            }
+
+            bool phoneTextHasLetters = phoneTextBox.Text.Any(x => char.IsLetter(x));
+
+            if (phoneTextHasLetters)
+            {
+                MessageBox.Show("Phone field cannot have letters.");
+                return false;
+            }
+
+            if (String.IsNullOrEmpty(phoneTextBox.Text))
+            {
+                MessageBox.Show("Phone field cannot be empty.");
+                return false;
+            }
+
+            if (!yesRadioButton.Checked && !noRadioButton.Checked)
+            {
+                MessageBox.Show("Active customer selected cannot be blank.");
+                return false;
+            }
+
+            if (countryComboBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Country must be selected.");
+                return false;
+            }
+
+            if (cityComboBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("City must be selected.");
+                return false;
+            }
+
+
+            return true;
         }
     }
 }
