@@ -25,7 +25,16 @@ namespace wgu_software_2
 
     
         private void saveButton_Click_1(object sender, EventArgs e)
-        {   
+        {
+
+            if(CheckAppointmentOverlapTimes(appointmentTimeStartPicker.Value, appointimeTimeEndPicker.Value, appointmentDayPicker.Value))
+            {
+                return;
+            }
+            if(!CheckAppointmentScheduleTimes(appointmentTimeStartPicker.Value, appointimeTimeEndPicker.Value))
+            {
+                return;
+            }
             //generate new appointmentID
             int newAppointmentID = GenerateAppointmentID();
             //retrieve customer ID from dgv

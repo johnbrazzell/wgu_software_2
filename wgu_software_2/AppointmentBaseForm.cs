@@ -58,5 +58,88 @@ namespace wgu_software_2
         {
 
         }
+
+
+        protected bool CheckAppointmentScheduleTimes(DateTime start, DateTime end)
+        {
+            if(start.TimeOfDay < TimeSpan.FromHours(9))
+            {
+                MessageBox.Show("Start time cannot be before\n" +
+                    "opening business hours (9am)");
+                return false;
+            }
+            else if(start.TimeOfDay > TimeSpan.FromHours(17))
+            {
+                MessageBox.Show("Start time cannot be after\n" +
+                    "closing business hours (5pm)");
+                return false;
+            }
+            else if(end.TimeOfDay < TimeSpan.FromHours(9))
+            {
+                MessageBox.Show("End time cannot be before\n" +
+                    "opening business hours (9am)");
+                return false;
+            }
+            else if(end.TimeOfDay > TimeSpan.FromHours(17))
+            {
+                MessageBox.Show("End time cannot be after\n" +
+                    "closing business hours (5pm)");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+            //return false;
+        }
+
+        protected bool CheckAppointmentOverlapTimes(DateTime start, DateTime end, DateTime day)
+        {
+            //we need to get the day of the scheduled appointment
+            //we need to check the times against the other appointments for the same day
+            //return error message if the appointments are overlapping
+            //otherwise schedule the appointment
+
+            //    return start1 < end2 && end1 > start2;
+
+            //Func<DateTime, DateTime, bool> findOverlap
+
+            //get list of dates for 
+            DBHelper.OpenConnection();
+            MySqlCommand command = _connection.CreateCommand();
+
+
+            //Created lambda function to cut down on code - initially was storing dates in a list
+            //and then looping through them.
+            Func<DateTime, DateTime, bool> isOverlap = (xStart, yEnd) => start.TimeOfDay < yEnd.TimeOfDay || end.TimeOfDay > xStart.TimeOfDay ;
+
+            //get all the values based on the new selected appointment date
+            command.CommandText = "SELECT start, end FROM appointment WHERE DATE(start)=@date";
+            command.Parameters.AddWithValue("@date", day.Date);
+
+            MySqlDataReader reader = command.ExecuteReader();
+
+            while(reader.Read())
+            {
+                DateTime dbStart = (DateTime)reader["start"];
+                DateTime dbEnd = (DateTime)reader["end"];
+
+                
+                if(isOverlap(dbStart, dbEnd))
+                {
+                    MessageBox.Show("This appointment overlaps with another time.");
+                    reader.Close();
+                    return true;
+                }
+                
+
+            }
+
+            reader.Close();
+
+            return false;
+            
+        }
     }
 }
