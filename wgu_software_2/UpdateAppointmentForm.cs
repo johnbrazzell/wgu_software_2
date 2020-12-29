@@ -77,6 +77,15 @@ namespace wgu_software_2
 
         private void saveButton_Click(object sender, EventArgs e)
         {
+
+            if (CheckAppointmentOverlapTimes(appointmentTimeStartPicker.Value, appointimeTimeEndPicker.Value, appointmentDayPicker.Value))
+            {
+                return;
+            }
+            if (!CheckAppointmentScheduleTimes(appointmentTimeStartPicker.Value, appointimeTimeEndPicker.Value))
+            {
+                return;
+            }
             //need to post the data back into the database.
             MySqlConnection connection = DBHelper.GetConnection();
             MySqlCommand command = connection.CreateCommand();
