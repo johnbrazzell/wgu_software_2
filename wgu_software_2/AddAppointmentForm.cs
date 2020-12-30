@@ -26,8 +26,12 @@ namespace wgu_software_2
     
         private void saveButton_Click_1(object sender, EventArgs e)
         {
-
-            if(CheckAppointmentOverlapTimes(appointmentTimeStartPicker.Value, appointimeTimeEndPicker.Value, appointmentDayPicker.Value))
+            //appointmentTimeStartPicker = appointmentTimeStartPicker.Value.ToLocalTime();
+            DateTime startTime = appointmentTimeStartPicker.Value;
+            startTime = startTime.ToLocalTime();
+            DateTime endTime = appointimeTimeEndPicker.Value;
+            endTime = endTime.ToLocalTime();
+            if(CheckAppointmentOverlapTimes(startTime, endTime, appointmentDayPicker.Value))
             {
                 return;
             }

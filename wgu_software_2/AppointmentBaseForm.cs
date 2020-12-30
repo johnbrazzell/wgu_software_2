@@ -86,6 +86,21 @@ namespace wgu_software_2
                     "closing business hours (5pm)");
                 return false;
             }
+            else if(end.TimeOfDay < start.TimeOfDay)
+            {
+                MessageBox.Show("End time cannot be less than Start time");
+                return false;
+            }
+            else if(start.TimeOfDay > end.TimeOfDay)
+            {
+                MessageBox.Show("Start time of day cannot be greater than End Time");
+                return false;
+            }
+            else if(String.IsNullOrEmpty(appointmentTypeTextBox.Text))
+            {
+                MessageBox.Show("Appointment Type cannot be blank");
+                return false;
+            }
             else
             {
                 return true;
@@ -108,15 +123,19 @@ namespace wgu_software_2
             //get list of dates for 
             DBHelper.OpenConnection();
             MySqlCommand command = _connection.CreateCommand();
+            
+            start = start.ToLocalTime();
+            end = end.ToLocalTime();
 
-
+           
             //Created lambda function to cut down on code - initially was storing dates in a list
             //and then looping through them.
-            Func<DateTime, DateTime, bool> isOverlap = (xStart, yEnd) => start.TimeOfDay < yEnd.TimeOfDay || end.TimeOfDay > xStart.TimeOfDay ;
+            Func<DateTime, DateTime, bool> isOverlap = (xStart, yEnd) => start.TimeOfDay < yEnd.TimeOfDay && end.TimeOfDay > xStart.TimeOfDay ;
 
             //get all the values based on the new selected appointment date
-            command.CommandText = "SELECT start, end FROM appointment WHERE DATE(start)=@date";
-            command.Parameters.AddWithValue("@date", day.Date);
+            command.CommandText = "SELECT start, end FROM appointment WHERE MONTH(start)=@date";
+            command.Parameters.AddWithValue("@date", day.Month);
+            //MessageBox.Show(day.Month.ToString());
 
             MySqlDataReader reader = command.ExecuteReader();
 
@@ -124,6 +143,12 @@ namespace wgu_software_2
             {
                 DateTime dbStart = (DateTime)reader["start"];
                 DateTime dbEnd = (DateTime)reader["end"];
+
+                dbStart = dbStart.ToLocalTime();
+                dbEnd = dbEnd.ToLocalTime();
+               
+
+                //MessageBox.Show("Start: " + dbStart.TimeOfDay.ToString() + "End: " + dbEnd.TimeOfDay.ToString());
 
                 
                 if(isOverlap(dbStart, dbEnd))

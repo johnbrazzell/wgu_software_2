@@ -39,7 +39,7 @@ namespace wgu_software_2
             // loginButton
             // 
             this.loginButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.loginButton.Location = new System.Drawing.Point(164, 170);
+            this.loginButton.Location = new System.Drawing.Point(190, 162);
             this.loginButton.Name = "loginButton";
             this.loginButton.Size = new System.Drawing.Size(114, 33);
             this.loginButton.TabIndex = 0;
@@ -51,7 +51,7 @@ namespace wgu_software_2
             // 
             this.usernameLabel.AutoSize = true;
             this.usernameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.usernameLabel.Location = new System.Drawing.Point(60, 70);
+            this.usernameLabel.Location = new System.Drawing.Point(27, 70);
             this.usernameLabel.Name = "usernameLabel";
             this.usernameLabel.Size = new System.Drawing.Size(87, 20);
             this.usernameLabel.TabIndex = 1;
@@ -61,7 +61,7 @@ namespace wgu_software_2
             // 
             this.passwordLabel.AutoSize = true;
             this.passwordLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.passwordLabel.Location = new System.Drawing.Point(65, 109);
+            this.passwordLabel.Location = new System.Drawing.Point(32, 109);
             this.passwordLabel.Name = "passwordLabel";
             this.passwordLabel.Size = new System.Drawing.Size(82, 20);
             this.passwordLabel.TabIndex = 2;
@@ -69,14 +69,14 @@ namespace wgu_software_2
             // 
             // usernameTextBox
             // 
-            this.usernameTextBox.Location = new System.Drawing.Point(153, 70);
+            this.usernameTextBox.Location = new System.Drawing.Point(178, 72);
             this.usernameTextBox.Name = "usernameTextBox";
             this.usernameTextBox.Size = new System.Drawing.Size(139, 20);
             this.usernameTextBox.TabIndex = 3;
             // 
             // passwordTextBox
             // 
-            this.passwordTextBox.Location = new System.Drawing.Point(153, 109);
+            this.passwordTextBox.Location = new System.Drawing.Point(178, 111);
             this.passwordTextBox.Name = "passwordTextBox";
             this.passwordTextBox.PasswordChar = '*';
             this.passwordTextBox.Size = new System.Drawing.Size(139, 20);
