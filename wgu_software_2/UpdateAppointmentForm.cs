@@ -78,11 +78,11 @@ namespace wgu_software_2
         private void saveButton_Click(object sender, EventArgs e)
         {
 
-            if (CheckAppointmentOverlapTimes(appointmentTimeStartPicker.Value, appointimeTimeEndPicker.Value, appointmentDayPicker.Value))
+            if (!CheckAppointmentScheduleTimes(_startTime.ToLocalTime(), _endTime.ToLocalTime()))
             {
                 return;
             }
-            if (!CheckAppointmentScheduleTimes(appointmentTimeStartPicker.Value, appointimeTimeEndPicker.Value))
+            else if (CheckAppointmentOverlapTimes(_startTime.ToLocalTime(), _endTime.ToLocalTime(), _selectedDay.Date))
             {
                 return;
             }

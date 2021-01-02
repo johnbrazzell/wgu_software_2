@@ -117,9 +117,10 @@ namespace wgu_software_2
             MySqlConnection connection = DBHelper.GetConnection();
             MySqlCommand command = connection.CreateCommand();
 
-            command.CommandText = "SELECT * FROM appointment WHERE MONTH(start)=@month AND YEAR(start)=@year";
+            command.CommandText = "SELECT * FROM appointment WHERE MONTH(start)=@month AND YEAR(start)=@year AND DAY(start)=@day";
             command.Parameters.AddWithValue("@month", dt.Month);
             command.Parameters.AddWithValue("@year", dt.Year);
+            command.Parameters.AddWithValue("@day", dt.Day);
             MySqlDataReader reader = command.ExecuteReader();
 
             while(reader.Read())

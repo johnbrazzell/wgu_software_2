@@ -17,6 +17,11 @@ namespace wgu_software_2
         private DataSet _customerDataSet;
         private MySqlDataAdapter _adapter;
         private MySqlConnection _connection;
+
+        protected DateTime _startTime;
+        protected DateTime _endTime;
+        protected DateTime _selectedDay;
+
         public AppointmentBaseForm()
         {
             InitializeComponent();
@@ -28,6 +33,10 @@ namespace wgu_software_2
             appointimeTimeEndPicker.Format = DateTimePickerFormat.Custom;
             appointimeTimeEndPicker.ShowUpDown = true;
             appointimeTimeEndPicker.CustomFormat = "hh:mm tt";
+
+            _startTime = appointmentTimeStartPicker.Value;
+            _endTime = appointimeTimeEndPicker.Value;
+            _selectedDay = appointmentDayPicker.Value;
 
             //need to load customer data into datagridview
             PopulateCustomerGrid();
@@ -106,65 +115,86 @@ namespace wgu_software_2
                 return true;
             }
 
-            //return false;
+         
         }
 
         protected bool CheckAppointmentOverlapTimes(DateTime start, DateTime end, DateTime day)
         {
-            //we need to get the day of the scheduled appointment
-            //we need to check the times against the other appointments for the same day
-            //return error message if the appointments are overlapping
-            //otherwise schedule the appointment
 
-            //    return start1 < end2 && end1 > start2;
-
-            //Func<DateTime, DateTime, bool> findOverlap
-
-            //get list of dates for 
-            DBHelper.OpenConnection();
-            MySqlCommand command = _connection.CreateCommand();
             
-            start = start.ToLocalTime();
-            end = end.ToLocalTime();
+            //DBHelper.OpenConnection();
+            //_connection = DBHelper.GetConnection();
+            MySqlCommand command = _connection.CreateCommand();
 
-           
-            //Created lambda function to cut down on code - initially was storing dates in a list
-            //and then looping through them.
-            Func<DateTime, DateTime, bool> isOverlap = (xStart, yEnd) => start.TimeOfDay < yEnd.TimeOfDay && end.TimeOfDay > xStart.TimeOfDay ;
-
+          
+          
+        
+            //if start is less than compared start
+            //|| start.TimeOfDay <= xStart.TimeOfDay
+            // Func<DateTime, DateTime, bool> isOverlap = (xStart, yEnd) => start.TimeOfDay <= yEnd.TimeOfDay && end.TimeOfDay >= xStart.TimeOfDay;
             //get all the values based on the new selected appointment date
-            command.CommandText = "SELECT start, end FROM appointment WHERE MONTH(start)=@date";
-            command.Parameters.AddWithValue("@date", day.Month);
+            //command.CommandText = "SELECT start, end FROM appointment WHERE MONTH(start)=@month AND DAY(start)=@day AND YEAR(start)=@year";
+            command.CommandText = "SELECT * FROM appointment WHERE MONTH(start)=@month AND DAY(start)=@day AND YEAR(start)=@year";
+            command.Parameters.AddWithValue("@month", _selectedDay.Month);
+            command.Parameters.AddWithValue("@day", _selectedDay.Day);
+            command.Parameters.AddWithValue("@year", _selectedDay.Year);
+
+            //MessageBox.Show("SelectedDate: " + day.Date.ToString());
+            //MessageBox.Show(day.ToString());
+            // command.Parameters.AddWithValue("@year", day.Year);
             //MessageBox.Show(day.Month.ToString());
+            start = start.ToUniversalTime();
+            end = end.ToUniversalTime();
 
             MySqlDataReader reader = command.ExecuteReader();
 
-            while(reader.Read())
-            {
-                DateTime dbStart = (DateTime)reader["start"];
-                DateTime dbEnd = (DateTime)reader["end"];
 
-                dbStart = dbStart.ToLocalTime();
-                dbEnd = dbEnd.ToLocalTime();
-               
+            //Created lambda function to cut down on code - initially was storing dates in a list
+            //and then looping through them.
+            Func<DateTime, DateTime, bool> isOverlap = (xStart, yEnd) => start.TimeOfDay < yEnd.TimeOfDay && xStart.TimeOfDay < end.TimeOfDay;
 
-                //MessageBox.Show("Start: " + dbStart.TimeOfDay.ToString() + "End: " + dbEnd.TimeOfDay.ToString());
-
-                
-                if(isOverlap(dbStart, dbEnd))
+                while (reader.Read())
                 {
-                    MessageBox.Show("This appointment overlaps with another time.");
-                    reader.Close();
-                    return true;
-                }
+                    MessageBox.Show(reader["start"].ToString());
+                    DateTime dbStart = (DateTime)reader["start"];
+                    DateTime dbEnd = (DateTime)reader["end"];
+                    
                 
+                    if (isOverlap(dbStart, dbEnd))
+                    {
+                        
+                        //MessageBox.Show("Start " + convertStart.TimeOfDay.ToString(), "End " + convertEnd.ToString());
+                        MessageBox.Show("This appointment overlaps with another time.");
+                        reader.Close();
+                        return true;
+                    }
 
-            }
 
-            reader.Close();
+                }
+                reader.Close();
 
+           
             return false;
             
+        }
+
+        private void appointmentTimeStartPicker_ValueChanged(object sender, EventArgs e)
+        {
+            _startTime = appointmentTimeStartPicker.Value.ToUniversalTime();
+         
+        }
+
+        private void appointimeTimeEndPicker_ValueChanged(object sender, EventArgs e)
+        {
+           
+            _endTime = appointimeTimeEndPicker.Value.ToUniversalTime();
+          
+        }
+
+        private void appointmentDayPicker_ValueChanged(object sender, EventArgs e)
+        {
+
+            _selectedDay = appointmentDayPicker.Value;
         }
     }
 }

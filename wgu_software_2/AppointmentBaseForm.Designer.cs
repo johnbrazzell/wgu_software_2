@@ -50,6 +50,7 @@ namespace wgu_software_2
             this.appointmentTimeStartPicker.Name = "appointmentTimeStartPicker";
             this.appointmentTimeStartPicker.Size = new System.Drawing.Size(200, 20);
             this.appointmentTimeStartPicker.TabIndex = 0;
+            this.appointmentTimeStartPicker.ValueChanged += new System.EventHandler(this.appointmentTimeStartPicker_ValueChanged);
             // 
             // appointmentDayPicker
             // 
@@ -57,6 +58,7 @@ namespace wgu_software_2
             this.appointmentDayPicker.Name = "appointmentDayPicker";
             this.appointmentDayPicker.Size = new System.Drawing.Size(200, 20);
             this.appointmentDayPicker.TabIndex = 1;
+            this.appointmentDayPicker.ValueChanged += new System.EventHandler(this.appointmentDayPicker_ValueChanged);
             // 
             // appointimeTimeEndPicker
             // 
@@ -64,6 +66,7 @@ namespace wgu_software_2
             this.appointimeTimeEndPicker.Name = "appointimeTimeEndPicker";
             this.appointimeTimeEndPicker.Size = new System.Drawing.Size(200, 20);
             this.appointimeTimeEndPicker.TabIndex = 2;
+            this.appointimeTimeEndPicker.ValueChanged += new System.EventHandler(this.appointimeTimeEndPicker_ValueChanged);
             // 
             // startTimeLabel
             // 

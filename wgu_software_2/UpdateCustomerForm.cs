@@ -36,7 +36,11 @@ namespace wgu_software_2
             //Update the comboBoxes with list values
             countryComboBox.Items.Clear();
             //countryComboBox.Items.Add(_countryList);
-            _countryList.ForEach(country => countryComboBox.Items.Add(country)); //Used this format instead of looping or adding items individually
+
+            //Used lambda expression here with list just to lessen the typing
+            //rather than using a standard loop this does the loop and adds
+            //all of the countries to the list in one line rather than multiple
+            _countryList.ForEach(country => countryComboBox.Items.Add(country));
 
             cityComboBox.Items.Clear();
 

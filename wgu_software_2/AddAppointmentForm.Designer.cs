@@ -33,7 +33,7 @@ namespace wgu_software_2
             // 
             // saveButton
             // 
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click_1);
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // AddAppointmentForm
             // 

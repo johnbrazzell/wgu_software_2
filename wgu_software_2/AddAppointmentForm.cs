@@ -24,67 +24,70 @@ namespace wgu_software_2
         }
 
     
-        private void saveButton_Click_1(object sender, EventArgs e)
+        private void saveButton_Click(object sender, EventArgs e)
         {
-            //appointmentTimeStartPicker = appointmentTimeStartPicker.Value.ToLocalTime();
-            DateTime startTime = appointmentTimeStartPicker.Value;
-            startTime = startTime.ToLocalTime();
-            DateTime endTime = appointimeTimeEndPicker.Value;
-            endTime = endTime.ToLocalTime();
-            if(CheckAppointmentOverlapTimes(startTime, endTime, appointmentDayPicker.Value))
+
+
+            //CheckAppointmentOverlapTimes(startTime, endTime, appointmentDayPicker.Value
+            if (!CheckAppointmentScheduleTimes(_startTime.ToLocalTime(), _endTime.ToLocalTime()))
             {
                 return;
             }
-            if(!CheckAppointmentScheduleTimes(appointmentTimeStartPicker.Value, appointimeTimeEndPicker.Value))
+            else if (CheckAppointmentOverlapTimes(_startTime.ToLocalTime(), _endTime.ToLocalTime(), _selectedDay.Date))
             {
                 return;
             }
-            //generate new appointmentID
-            int newAppointmentID = GenerateAppointmentID();
-            //retrieve customer ID from dgv
-            GetCustomerID();
-            //retrieve userId from user database
-            GetUserID();
+           
+
+
+
+                DBHelper.OpenConnection();
+                MySqlConnection _connection = DBHelper.GetConnection();
+                //generate new appointmentID
+                int newAppointmentID = GenerateAppointmentID();
+                //retrieve customer ID from dgv
+                GetCustomerID();
+                //retrieve userId from user database
+                GetUserID();
+
+                MySqlCommand command = _connection.CreateCommand();
+
+                DateTime startDateAndTime = appointmentDayPicker.Value.Date + appointmentTimeStartPicker.Value.TimeOfDay;
+                DateTime startConverted = startDateAndTime.ToUniversalTime();
+
+                DateTime endDateAndTime = appointmentDayPicker.Value.Date + appointimeTimeEndPicker.Value.TimeOfDay;
+                DateTime endDateConverted = endDateAndTime.ToUniversalTime();
+
+                DateTime dt = DateTime.UtcNow;
+
+                command.CommandText = "INSERT INTO appointment (appointmentId, customerId, userId, title," +
+                    "description, location, contact, type, url, start, end, createDate, createdBy, lastUpdate, lastUpdateBy) " +
+                    "VALUES (@appointmentID, @customerID, @userID, @title, @description, @location, @contact, @type, @url, @start," +
+                    "@end, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
+
+                command.Parameters.AddWithValue("@appointmentID", newAppointmentID);
+                command.Parameters.AddWithValue("@customerID", _customerID); //Need to add value from DGV. 
+                command.Parameters.AddWithValue("@userID", _userID);
+                command.Parameters.AddWithValue("@title", "not needed");
+                command.Parameters.AddWithValue("@description", "not needed");
+                command.Parameters.AddWithValue("@location", "not needed");
+                command.Parameters.AddWithValue("@contact", "not needed");
+                command.Parameters.AddWithValue("@type", appointmentTypeTextBox.Text.Trim());
+                command.Parameters.AddWithValue("@url", "not needed");
+                command.Parameters.AddWithValue("@start", startConverted);
+                command.Parameters.AddWithValue("@end", endDateConverted);
+                command.Parameters.AddWithValue("@createDate", dt);
+                command.Parameters.AddWithValue("@createdBy", DBHelper.GetCurrentUser());
+                command.Parameters.AddWithValue("@lastUpdate", dt);
+                command.Parameters.AddWithValue("@lastUpdateBy", DBHelper.GetCurrentUser());
+
+                command.ExecuteNonQuery();
+
+                base.PopulateCustomerGrid();
+                _appointmentForm.UpdateCustomerForm();
+                _appointmentForm.UpdateAppointmentsByMonth();
+                this.Close();
             
-            DBHelper.OpenConnection();
-            MySqlConnection _connection = DBHelper.GetConnection();
-            MySqlCommand command = _connection.CreateCommand();
-
-            DateTime startDateAndTime = appointmentDayPicker.Value.Date + appointmentTimeStartPicker.Value.TimeOfDay;
-            DateTime startConverted = startDateAndTime.ToUniversalTime();
-
-            DateTime endDateAndTime = appointmentDayPicker.Value.Date + appointimeTimeEndPicker.Value.TimeOfDay;
-            DateTime endDateConverted = endDateAndTime.ToUniversalTime();
-
-            DateTime dt = DateTime.UtcNow;
-
-            command.CommandText = "INSERT INTO appointment (appointmentId, customerId, userId, title," +
-                "description, location, contact, type, url, start, end, createDate, createdBy, lastUpdate, lastUpdateBy) " +
-                "VALUES (@appointmentID, @customerID, @userID, @title, @description, @location, @contact, @type, @url, @start," +
-                "@end, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
-
-            command.Parameters.AddWithValue("@appointmentID", newAppointmentID);
-            command.Parameters.AddWithValue("@customerID", _customerID); //Need to add value from DGV. 
-            command.Parameters.AddWithValue("@userID", _userID);
-            command.Parameters.AddWithValue("@title", "not needed");
-            command.Parameters.AddWithValue("@description", "not needed");
-            command.Parameters.AddWithValue("@location", "not needed");
-            command.Parameters.AddWithValue("@contact", "not needed");
-            command.Parameters.AddWithValue("@type", appointmentTypeTextBox.Text.Trim());
-            command.Parameters.AddWithValue("@url", "not needed");
-            command.Parameters.AddWithValue("@start", startConverted);
-            command.Parameters.AddWithValue("@end", endDateConverted);
-            command.Parameters.AddWithValue("@createDate", dt);
-            command.Parameters.AddWithValue("@createdBy", DBHelper.GetCurrentUser());
-            command.Parameters.AddWithValue("@lastUpdate", dt);
-            command.Parameters.AddWithValue("@lastUpdateBy", DBHelper.GetCurrentUser());
-
-            command.ExecuteNonQuery();
-
-            base.PopulateCustomerGrid();
-            _appointmentForm.UpdateCustomerForm();
-            _appointmentForm.UpdateAppointmentsByMonth();
-            this.Close();
             // MessageBox.Show("This is from the child Add Appointment form");
         }
 
