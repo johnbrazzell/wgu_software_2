@@ -155,7 +155,7 @@ namespace wgu_software_2
 
                 while (reader.Read())
                 {
-                    MessageBox.Show(reader["start"].ToString());
+                    //MessageBox.Show(reader["start"].ToString());
                     DateTime dbStart = (DateTime)reader["start"];
                     DateTime dbEnd = (DateTime)reader["end"];
                     

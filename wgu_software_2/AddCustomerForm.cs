@@ -33,8 +33,11 @@ namespace wgu_software_2
 
             //Update the comboBoxes with list values
             countryComboBox.Items.Clear();
-            //countryComboBox.Items.Add(_countryList);
-            _countryList.ForEach(country => countryComboBox.Items.Add(country)); //Used this format instead of looping or adding items individually
+ 
+            //Using a lambda expression here to reduce code
+            //I can search a list and add values all in one line this way
+            //rather than writing a loop and then adding within the loop
+            _countryList.ForEach(country => countryComboBox.Items.Add(country)); 
             
             cityComboBox.Items.Clear();
             //refresh datagridview
