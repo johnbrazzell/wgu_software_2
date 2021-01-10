@@ -150,7 +150,7 @@ namespace wgu_software_2
 
 
             //Created lambda function to cut down on code - initially was storing dates in a list
-            //and then looping through them.
+            //and then looping through them. 
             Func<DateTime, DateTime, bool> isOverlap = (xStart, yEnd) => start.TimeOfDay < yEnd.TimeOfDay && xStart.TimeOfDay < end.TimeOfDay;
 
                 while (reader.Read())

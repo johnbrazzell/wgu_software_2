@@ -53,10 +53,7 @@ namespace wgu_software_2
                             row.Selected = true;
                         }
                     }
-                    //customerDataGridView.Rows.IndexOf()
-
-                   // customerDataGridView.Rows.IndexOf()
-                   //     OfType<DataGridViewRow>().ToList().ForEach(row => { if (!row.IsNewRow) row.Visible = false; });
+                    
 
                     appointmentTypeTextBox.Text = reader["type"].ToString();
 

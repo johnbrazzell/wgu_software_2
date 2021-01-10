@@ -393,6 +393,8 @@ namespace wgu_software_2
                 return false;
             }
 
+
+            //
             bool phoneTextHasLetters = phoneTextBox.Text.Any(x => char.IsLetter(x));
 
             if (phoneTextHasLetters)
